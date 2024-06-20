@@ -39,6 +39,8 @@ paths:
       tags:
         - users
       summary: Register the user
+      security:
+        - bearerAuth: []
       operationId: registerUser
       requestBody:
         description: Sign up a user
@@ -90,7 +92,7 @@ components:
           example: 'User created successfully'
 
   securitySchemes:
-    jwt_token:
-      type: apiKey
-      name: api_key
-      in: header
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
