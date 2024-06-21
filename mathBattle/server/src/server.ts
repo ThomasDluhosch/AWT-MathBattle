@@ -6,6 +6,7 @@ import { openConnection } from "./database/open-connection";
 import morgan from 'morgan';
 import helmet from 'helmet';
 import { UserRouter } from "./user/UserRouter";
+import { LevelRouter } from "./levels/LevelRouter";
 
 config();
 
@@ -25,7 +26,7 @@ openConnection(uri);
 
 //ROUTERS
 app.use("/api/users", UserRouter);
-
+app.use("/api/levels", LevelRouter);
 
 app.listen(PORT, () => {
     console.log(`Server is running on PORT: ${PORT}`);

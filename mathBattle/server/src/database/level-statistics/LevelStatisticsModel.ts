@@ -4,12 +4,10 @@ import { Model, Schema, model } from "mongoose";
 const levelStatisticsSchema = new Schema<ILevelStatistics>({
     number: {
         type: Number,
-        unique:true,
         require: true
     },
     username: {
         type: String,
-        unique:true,
         require: true
     },
     completed: {
