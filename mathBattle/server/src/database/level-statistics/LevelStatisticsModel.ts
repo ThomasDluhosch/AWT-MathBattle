@@ -24,8 +24,7 @@ const levelStatisticsSchema = new Schema<ILevelStatistics>({
         require: true
     },
     score: {
-        type: Number,
-        require: true
+        type: Number
     },
    
 });

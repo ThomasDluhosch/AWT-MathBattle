@@ -2,8 +2,8 @@ export interface ILevelStatistics {
     number: number,
     username: string 
     completed: boolean
-    medals: Medals
-    score: number
+    medals?: Medals
+    score?: number
 }
 
 export interface Medals {
