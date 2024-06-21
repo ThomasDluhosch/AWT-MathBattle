@@ -13,6 +13,7 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
             console.log(err)
             return res.sendStatus(403)
         }
+        console.log(user);
         req.user = user;
         next()
     });

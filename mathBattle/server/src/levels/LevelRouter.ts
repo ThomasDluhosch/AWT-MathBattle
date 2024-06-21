@@ -8,4 +8,4 @@ import { authenticate } from "../middleware/authenticate";
 export const LevelRouter = Router();
 LevelRouter.use(authenticate);
 
-LevelRouter.post("/", (req: Request, res: Response) => tryProcess(req, res, getLevelMap));
+LevelRouter.get("/", (req: Request, res: Response) => tryProcess(req, res, getLevelMap));
