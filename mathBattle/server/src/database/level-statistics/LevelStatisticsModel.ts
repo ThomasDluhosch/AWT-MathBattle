@@ -21,7 +21,6 @@ const levelStatisticsSchema = new Schema<ILevelStatistics>({
         subtraction: Boolean,
         multiplication: Boolean,
         division: Boolean,
-        require: true
     },
     score: {
         type: Number
