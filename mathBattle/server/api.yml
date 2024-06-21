@@ -39,8 +39,6 @@ paths:
       tags:
         - users
       summary: Register the user
-      security:
-        - bearerAuth: []
       operationId: registerUser
       requestBody:
         description: Sign up a user
@@ -58,6 +56,46 @@ paths:
                 $ref: '#/components/schemas/SuccessResponse'  
         '400':
           description: Username already in use
+  /levels:
+    get:
+      tags:
+        - levels
+      summary: Get all the levels of the user
+      security:
+        - bearerAuth: []
+      operationId: getLevelMap
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LevelArray'  
+        '403':
+          description: No user
+  /levels/{id}:
+    get:
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema: 
+            type: integer
+      tags:
+        - level
+      summary: Get the level by id
+      security:
+        - bearerAuth: []
+      operationId: getLevel
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Level'  
+        '403':
+          description: No user
 components:
   schemas:
     User:
@@ -90,6 +128,24 @@ components:
         message:
           type: string 
           example: 'User created successfully'
+    LevelArray:
+      type: array
+      items: 
+        type: object
+        properties:
+          number:
+            type: number
+            example: 1
+          completed:
+            type: boolean
+            example: true
+    Level:
+      type: object
+      properties:
+        number:
+          type: number
+          example: 1
+        
 
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme
