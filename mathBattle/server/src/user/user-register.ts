@@ -21,7 +21,7 @@ import { IUser } from "../database/users/IUser";
     }
 
     const hashedPwd = hashPassword(password);
-    const newUser = await UserModel.create({
+    await UserModel.create({
       username,
       password: hashedPwd
     });

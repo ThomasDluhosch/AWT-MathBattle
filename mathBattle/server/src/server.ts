@@ -22,7 +22,11 @@ const PORT: string | number = process.env.PORT || 1000;
 const uri: string = process.env.DB_PATH || "";
 console.log(uri);
 openConnection(uri);
+
+//ROUTERS
 app.use("/api/users", UserRouter);
+
+
 app.listen(PORT, () => {
     console.log(`Server is running on PORT: ${PORT}`);
 });
