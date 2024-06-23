@@ -40,5 +40,4 @@ export function NavBar() {
       </AppBar>
     </Box>
   );
-  //test
 }
