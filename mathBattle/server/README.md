@@ -27,6 +27,14 @@ erDiagram
         int calculationDifficulty
     }
 
+    Calculations {
+        CalcType type
+        int difficulty
+        string task
+        int solution
+    }
+
+
     LevelStatistics {
         int number PK
         string username PK
