@@ -11,7 +11,10 @@ export async function getLevelBattle(req: Request, res: Response){
     if(!numberLevel) return res.status(403).send("No level number");
     const level = await LevelModel.findOne({number: numberLevel});
     if(!level) return res.status(404).send("Level not found");
-    const tasks = await getTasks(level);
+    const calcTypeParam = req.query.calcType as string;
+    let calcType = parseInt(calcTypeParam);
+    if(isNaN(calcType)) calcType = 0;
+    const tasks = await getTasks(level, calcType);
     res.status(200).send({
         monsterPicture: level.monsterPicture,
         monsterHealth: level.monsterHealth,
@@ -19,9 +22,9 @@ export async function getLevelBattle(req: Request, res: Response){
     });
 }
 
-async function getTasks(level: ILevel) {
+async function getTasks(level: ILevel, calcType : number) {
     const calcFilter = {
-        type: CalcType.ADD,
+        type: calcType,
         difficulty:level.calcDifficulty
     }
 
