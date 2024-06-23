@@ -17,7 +17,7 @@ const calcSchema = new Schema<ICalculation>({
     type: {
         type: Number,
         require: true,
-        enum: Object.values(CalcType)
+        enum: [CalcType.ADD, CalcType.SUBTRACT, CalcType.MULTIPLICATE, CalcType.DIVIDE]
     },
    
 });

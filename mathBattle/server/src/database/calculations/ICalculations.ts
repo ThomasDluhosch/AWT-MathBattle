@@ -7,7 +7,7 @@ export interface ICalculation {
 
 export enum CalcType {
     ADD,
-    SUBSTRACT,
+    SUBTRACT,
     MULTIPLICATE,
     DIVIDE
 }

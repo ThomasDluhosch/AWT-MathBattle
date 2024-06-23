@@ -7,7 +7,6 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import { UserRouter } from "./user/UserRouter";
 import { LevelRouter } from "./levels/LevelRouter";
-
 config();
 
 const app: Express = express();
@@ -31,6 +30,7 @@ app.use("/api/levels", LevelRouter);
 app.listen(PORT, () => {
     console.log(`Server is running on PORT: ${PORT}`);
 });
+
 
 
 
