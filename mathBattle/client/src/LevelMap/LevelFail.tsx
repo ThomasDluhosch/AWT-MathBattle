@@ -1,7 +1,7 @@
 import { Typography, Box, Button, Grid, ButtonGroup } from "@mui/material";
 import { NavBar } from "../NavBar";
 
-export function LevelSucceed() {
+export function LevelFail() {
   return (
     <div>
       <NavBar />
