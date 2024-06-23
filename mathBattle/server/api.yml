@@ -131,22 +131,32 @@ components:
     LevelArray:
       type: array
       items: 
-        type: object
-        properties:
-          number:
-            type: number
-            example: 1
-          completed:
-            type: boolean
-            example: true
+        $ref: '#/components/schemas/Level' 
     Level:
       type: object
       properties:
         number:
           type: number
           example: 1
-        
-
+        completed:
+          type: boolean
+          example: true
+        medals:
+          type: object
+          nullable: true
+          properties:
+            addition: 
+              type: boolean
+              example: true
+            subtraction: 
+              type: boolean
+              example: true
+            multiplication:  
+              type: boolean
+              example: false
+            division:  
+              type: boolean
+              example: false
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme
       type: http
