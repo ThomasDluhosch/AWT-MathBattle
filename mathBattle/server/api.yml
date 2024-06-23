@@ -82,7 +82,7 @@ paths:
           schema: 
             type: integer
       tags:
-        - level
+        - levels
       summary: Get the level by id
       security:
         - bearerAuth: []
@@ -96,6 +96,40 @@ paths:
                 $ref: '#/components/schemas/Level'  
         '403':
           description: No user
+  /levels/{id}/battle:
+    get:
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema: 
+            type: integer
+        - in: query
+          name: calcType
+          required: false
+          example: 0
+          description: 0 for addition (default), 1 for subtraction, 2 for multiplication, 3 for division
+          schema: 
+            type: integer
+            minimum: 0
+            maximum: 3
+      tags:
+        - levels
+      summary: Get everything you need for the battle of a level
+      security:
+        - bearerAuth: []
+      operationId: getLevelBattle
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LevelBattle'  
+        '403':
+          description: No level id given       
+        '404':
+          description: Level Id not found
 components:
   schemas:
     User:
@@ -157,6 +191,26 @@ components:
             division:  
               type: boolean
               example: false
+    LevelBattle:
+      type: object
+      properties:
+        monsterPicture:
+          type: string
+          example: "/public/monsters/FlyingEye.svg"
+        monsterHealth:
+          type: number
+          example: 60
+        tasks:
+          type: array
+          items:
+            type: object
+            properties:
+              task: 
+                type: string
+                example: "4 + 3"
+              solution:
+                type: number
+                example: 7
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme
       type: http
