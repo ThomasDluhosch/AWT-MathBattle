@@ -30,3 +30,5 @@ export function LevelFail() {
 </Box>
   );
 }
+
+export default LevelFail;
