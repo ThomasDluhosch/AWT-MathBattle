@@ -6,6 +6,8 @@ import { LevelStatisticsModel } from "../database/level-statistics/LevelStatisti
 export async function getLevel(req: Request, res: Response){
     const numberLevel = req.params.id;
     if(!numberLevel) return res.status(403).send("No level number");
-    const level = await LevelStatisticsModel.find({number: numberLevel});
+    const user = req.user;
+    if(!user) return res.status(403).send("No user set");
+    const level = await LevelStatisticsModel.find({number: numberLevel, username: user.username});
     res.status(200).send(level);
 }
