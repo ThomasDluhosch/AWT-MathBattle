@@ -8,6 +8,10 @@ export function LoginPage() {
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const login = () => {
+    loginUser({ username: username, password: password })
+  }
+
 
   return (
     <div>
@@ -32,7 +36,7 @@ export function LoginPage() {
             <TextField id="password" label="Password" type="password" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} />
           </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" onClick={() => loginUser({ username: username, password: password })}>Login</Button>
+            <Button variant="contained" onClick={login}>Login</Button>
           </Grid>
           <Grid item xs={12}>
             <Button variant="outlined">Register</Button>
