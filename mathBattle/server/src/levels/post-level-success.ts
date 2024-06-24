@@ -31,6 +31,6 @@ export async function postLevelSuccess(req: Request, res: Response){
     if (updateResult.matchedCount == 1){
         res.sendStatus(200);
     } else {
-        res.sendStatus(500);
+        res.sendStatus(404);
     }
 }
