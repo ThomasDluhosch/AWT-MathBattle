@@ -24,5 +24,12 @@ export function useLoginService() {
             alert(loginResponse.message);
         }
     }
-    return [loginUser];
+    const logoutUser = () => {
+            authContext.setToken(null);
+            navigate('/login');
+    }
+    const isLoggedIn = () => {
+        return authContext.token == null ? false : true;
+    }
+    return [loginUser, logoutUser, isLoggedIn];
 }
