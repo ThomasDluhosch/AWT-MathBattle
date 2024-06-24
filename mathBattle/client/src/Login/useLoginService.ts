@@ -12,24 +12,31 @@ interface LoginResponse {
 export function useLoginService() {
     const navigate = useNavigate();
     const authContext = useAuthentication();
+
     const loginUser = async (user: IUser) => {
-        console.log("logging in");
-        console.log(user);
-        const response = await fetchFromBackend("/users/login", "POST", user);
-        const loginResponse : LoginResponse = await response.json();
-        if (loginResponse.success) {
-            authContext.setToken(loginResponse.token);
-            navigate('/');
+        if (import.meta.env.VITE_USE_BACKEND == "TRUE") {
+            const response = await fetchFromBackend("/users/login", "POST", user);
+            const loginResponse: LoginResponse = await response.json();
+            if (loginResponse.success) {
+                authContext.setToken(loginResponse.token);
+                navigate('/');
+            } else {
+                alert(loginResponse.message);
+            }
         } else {
-            alert(loginResponse.message);
+            authContext.setToken("SomeTest");
+            navigate('/');
         }
     }
+
     const logoutUser = () => {
-            authContext.setToken(null);
-            navigate('/login');
+        authContext.setToken(null);
+        navigate('/login');
     }
+
     const isLoggedIn = () => {
         return authContext.token == null ? false : true;
     }
+
     return [loginUser, logoutUser, isLoggedIn];
 }
