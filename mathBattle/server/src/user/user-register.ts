@@ -43,7 +43,12 @@ async function initLevelStatistics(username: string) {
       number: index,
       username: username,
       completed: false,
-      medals: null
+      medals: {
+        addition: false,
+        subtraction: false,
+        multiplication: false,
+        division: false,
+      }
     });
   }
 }
