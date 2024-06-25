@@ -10,6 +10,7 @@ import { LevelSucceed } from "./Level/LevelSucceed.tsx";
 import { LevelFail } from "./Level/LevelFail.tsx";
 import { AuthenticatedRoute } from "./Authentication/AuthenticatedRoute.tsx";
 import { AuthProvider } from "./Authentication/AuthProvider.tsx";
+import { Credits } from "./LevelMap/Credits.tsx";
 
 const router = createBrowserRouter([
     {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
             {
                 path: "/failed",
                 element: <LevelFail />,
+            },
+            {
+                path: "/credits",
+                element: <Credits />,
             },
             {
                 path: "*",
