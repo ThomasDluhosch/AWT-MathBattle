@@ -11,11 +11,16 @@ import { LevelFail } from "./Level/LevelFail.tsx";
 import { AuthenticatedRoute } from "./Authentication/AuthenticatedRoute.tsx";
 import { AuthProvider } from "./Authentication/AuthProvider.tsx";
 import { Credits } from "./LevelMap/Credits.tsx";
+import { Level } from "./Level/Level.tsx";
 
 const router = createBrowserRouter([
     {
         path: "/login",
         element: <LoginPage />,
+    },
+    {
+        path: "/level",
+        element: <Level />,
     },
     {
         path: "/",
