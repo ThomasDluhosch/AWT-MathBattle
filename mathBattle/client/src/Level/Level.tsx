@@ -1,4 +1,4 @@
-import { Typography, Box, Button, Grid, ButtonGroup } from "@mui/material";
+import { Typography, Box, Button, Grid, ButtonGroup, TextField, LinearProgress } from "@mui/material";
 import { NavBar } from "../NavBar";
 import { useNavigate } from "react-router-dom";
 import {theme} from "../main-theme"
@@ -10,6 +10,9 @@ export function Level() {
         navigate("/map");
     };
     */
+
+    const time = 80;
+    const health = 95;
 
     return (
 
@@ -23,24 +26,35 @@ export function Level() {
             <img src="/public/heart-lost.svg" style={{ width: '5em'}}/>
             </Box>
 
-            <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', border: 1, flexWrap: 'wrap'}}>
-                <Box sx={{border: 1, borderColor: theme.palette.primary.main, width: '40em', m: '1em', p:'1em'}}>
-                    1 + 1
+            <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap'}}>
 
-                    <Box>
-                    Solution
+                <Box sx={{height: '22em', width: '40em', m: '1em', p:'1em', display: 'flex', justifyContent:'space-between', flexDirection:'column'}}>
+
+                    <Box sx={{border: 5, borderRadius: 5, borderColor: theme.palette.secondary.main, display: 'flex', justifyContent: 'center'}}>
+                        <Typography variant="h1">99 + 1</Typography>
+                    </Box>
+                  
+                    <Box sx={{border: 5, height:'5em', borderRadius: 5, borderColor: theme.palette.secondary.main, display: 'flex', justifyContent: 'center', mt: '2em'}}>
+                        <TextField fullWidth placeholder="Solution"></TextField>
                     </Box>
 
-                    <Box>
-                    Timer
+                    <Box sx={{mt: '2em', display:"flex", alignItems:"center", flexDirection:"column"}}>
+                        <LinearProgress color="secondary" variant="determinate" value={time} sx={{height:"2em", width:"80%"}} />
+                        <Typography textAlign="center" variant="body1">{`${time} seconds`}</Typography>
                     </Box>
 
                 </Box>
-                <Box sx={{display: 'flex', alignContent: 'center',justifyContent:'center', flexDirection: 'column',border: 1, borderColor: theme.palette.secondary.main, width: '40em', m: '1em', p:'1em'}}>
-                    <img src="/public/monsters/FlyingEye.svg" style={{ width: '25em'}}/>
 
-                    <Box>
-                        Healthbar
+
+
+                <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'column', height:'22em', width: '40em', m: '1em', p:'1em'}}>
+                    <Box sx={{height: "16em", border: 5, borderRadius:5, borderColor: theme.palette.primary.main, width: "100%", display: "flex", justifyContent: "center"}}>
+                        <img src="/public/monsters/SlimeBlue.svg" style={{}}/>
+                    </Box>
+
+                    <Box sx={{mt: '2em', width:"80%"}}>
+                        <LinearProgress color="primary" variant="determinate" value={health} sx={{height:"2em", width:"100%"}} />
+                        <Typography textAlign="center" variant="body1">{`${health} / 100 HP`}</Typography>
                     </Box>
 
                 </Box>

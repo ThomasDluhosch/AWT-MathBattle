@@ -20,6 +20,14 @@ const router = createBrowserRouter([
     element: <LoginPage />,
   },
   {
+    path: "/level",
+    element: <Level />,
+  },
+  {
+    path: "/instruction",
+    element: <InstructionsPage />,
+  },
+  {
     path: "/",
     element: <AuthenticatedRoute />,
     children: [
