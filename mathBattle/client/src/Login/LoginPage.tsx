@@ -2,14 +2,19 @@ import { Box, Button, Grid, Typography, TextField } from '@mui/material'
 import { NavBar } from '../NavBar'
 import { useLoginService } from './useLoginService';
 import { useState } from 'react';
+import { useRegisterService } from './useRegisterService';
 
 export function LoginPage() {
   const [loginUser] = useLoginService();
+  const registerUser = useRegisterService();
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const login = () => {
     loginUser({ username: username, password: password })
+  }
+  const register = () => {
+    registerUser({ username: username, password: password })
   }
 
 
@@ -35,7 +40,7 @@ export function LoginPage() {
             <Button variant="contained" onClick={login}>Login</Button>
           </Grid>
           <Grid item xs={12}>
-            <Button variant="outlined">Register</Button>
+            <Button variant="outlined" onClick={register}>Register</Button>
           </Grid>
         </Grid>
       </Box>
