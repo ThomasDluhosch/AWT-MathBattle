@@ -19,6 +19,7 @@ export function useLoginService() {
             const loginResponse: LoginResponse = await response.json();
             if (loginResponse.success) {
                 authContext.setToken(loginResponse.token);
+                localStorage.setItem("username", user.username);
                 navigate('/');
             } else {
                 alert(loginResponse.message);
@@ -31,6 +32,7 @@ export function useLoginService() {
 
     const logoutUser = () => {
         authContext.setToken(null);
+        localStorage.removeItem("username");
         navigate('/login');
     }
 
