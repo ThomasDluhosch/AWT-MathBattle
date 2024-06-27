@@ -2,13 +2,21 @@ import { Box, Button, Grid, Typography, TextField, Card, CardActions, CardConten
 import { ILevel } from '../Interfaces/ILevel'
 import { LevelCard } from './LevelCard'
 import { NavBar } from '../NavBar'
+import { useLevelMapService } from './useLevelMapService'
+import { useEffect, useState } from 'react'
 
 interface LevelMapPageProps {
   name: string,
   levels: ILevel[]
 }
 
-export function LevelMapPage(props: LevelMapPageProps) {
+export function LevelMapPage() {
+
+  const getLevels = useLevelMapService();
+  const [levels, setLevels] = useState<ILevel[]>([]);
+  useEffect(() => {getLevels().then((result) => {
+    if(result) setLevels(result);
+  })}, [])
 
   return (
     <div>
@@ -17,13 +25,13 @@ export function LevelMapPage(props: LevelMapPageProps) {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h2" >
-              Welcome {props.name}
+              Welcome 
             </Typography><br />
             <Typography variant="h4" >
               Pick a level
             </Typography><br />
           </Grid>
-          {props.levels.map((level) =>
+          {levels.map((level) =>
             <Grid item xs={12} md={6} lg={4} xl={3}>
               <LevelCard {...level} />
             </Grid>

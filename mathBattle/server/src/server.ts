@@ -7,6 +7,8 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import { UserRouter } from "./user/UserRouter";
 import { LevelRouter } from "./levels/LevelRouter";
+import { createLevels } from "./createLevels"
+import { createCalculations } from "./createCalulculations";
 config();
 
 const app: Express = express();
@@ -31,6 +33,7 @@ app.listen(PORT, () => {
     console.log(`Server is running on PORT: ${PORT}`);
 });
 
+// createLevels();
 
-
+// createCalculations();
 

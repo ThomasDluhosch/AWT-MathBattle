@@ -10,7 +10,7 @@ import { LevelSucceed } from "./Level/LevelSucceed.tsx";
 import { LevelFail } from "./Level/LevelFail.tsx";
 import { AuthenticatedRoute } from "./Authentication/AuthenticatedRoute.tsx";
 import { AuthProvider } from "./Authentication/AuthProvider.tsx";
-import { Credits } from "./LevelMap/Credits.tsx";
+import { Credits } from "./StaticPages/Credits.tsx";
 import { InstructionsPage } from "./InstructionsPage.tsx";
 import { Level } from "./Level/Level.tsx";
 
@@ -34,14 +34,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: (
-          <LevelMapPage
-            name="John"
-            levels={[
-              { number: 1, completed: true },
-              { number: 2, completed: true },
-              { number: 3, completed: false },
-            ]}
-          />
+          <LevelMapPage/>
         ),
       },
       {

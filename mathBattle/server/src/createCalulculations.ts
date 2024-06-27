@@ -5,7 +5,7 @@ import { CalculationsModel } from "./database/calculations/CalculationsModel";
 //  createCalculations();
 
 
-async function createCalculations() {
+export async function createCalculations() {
     const calculationsData = JSON.parse(readFileSync('calculations.json', 'utf8'));
 
     // Prepare the data to be inserted into the database
