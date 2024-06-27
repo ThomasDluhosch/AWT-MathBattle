@@ -19,15 +19,11 @@ export function LoginPage() {
       <Box textAlign='center' sx={{ m: 10 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography variant="h2" >
+            <img src='/public/MathBattle_logo.png'  style={{ maxHeight: "40vh" }}></img>
+            <br />
+            <Typography variant="h6" >
               Welcome
-            </Typography><br />
-            <Typography variant="h4" >
-              this is
-            </Typography><br />
-            <Typography variant="h2" >
-              Math Battle
-            </Typography><br />
+            </Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField id="username" label="Username" variant="outlined" value={username} onChange={(e) => setUsername(e.target.value)} />
