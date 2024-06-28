@@ -9,7 +9,7 @@ interface LoginResponse {
     message: string
 }
 
-export function useLoginService() {
+export function useLoginService() : [(user: IUser) => Promise<void>, () => void, () => boolean] {
     const navigate = useNavigate();
     const authContext = useAuthentication();
 
