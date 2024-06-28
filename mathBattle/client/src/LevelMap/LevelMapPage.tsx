@@ -14,10 +14,6 @@ import { NavBar } from "../NavBar";
 import { useLevelMapService } from "./useLevelMapService";
 import { useEffect, useState } from "react";
 
-interface LevelMapPageProps {
-  name: string;
-  levels: ILevel[];
-}
 
 export function LevelMapPage() {
   const getLevels = useLevelMapService();

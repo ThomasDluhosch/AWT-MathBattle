@@ -6,7 +6,7 @@ import {
   ListItemText,
   Box,
 } from "@mui/material";
-import { NavBar } from "./NavBar";
+import { NavBar } from "../NavBar";
 
 export function InstructionsPage() {
   return (
