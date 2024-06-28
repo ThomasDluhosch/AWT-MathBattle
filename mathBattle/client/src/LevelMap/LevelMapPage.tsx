@@ -1,12 +1,7 @@
 import {
   Box,
-  Button,
   Grid,
-  Typography,
-  TextField,
-  Card,
-  CardActions,
-  CardContent,
+  Typography
 } from "@mui/material";
 import { ILevel } from "../Interfaces/ILevel";
 import { LevelCard } from "./LevelCard";

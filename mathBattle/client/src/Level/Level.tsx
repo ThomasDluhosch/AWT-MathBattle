@@ -1,6 +1,5 @@
-import { Typography, Box, Button, Grid, ButtonGroup, TextField, LinearProgress } from "@mui/material";
+import { Typography, Box, TextField, LinearProgress } from "@mui/material";
 import { NavBar } from "../NavBar";
-import { useNavigate } from "react-router-dom";
 import {theme} from "../main-theme"
 
 export function Level() {
