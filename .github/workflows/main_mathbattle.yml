@@ -55,7 +55,7 @@ jobs:
       - name: Copy client dir and .env
         run: |
            cp -a -r mathBattle/client/dist mathBattle/server/dist/client
-           cp mathBattle/server/env.template mathBattle/server/.env
+           cp mathBattle/server/.env.template mathBattle/server/.env
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
