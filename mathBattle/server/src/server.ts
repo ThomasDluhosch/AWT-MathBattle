@@ -9,6 +9,7 @@ import { UserRouter } from "./user/UserRouter";
 import { LevelRouter } from "./levels/LevelRouter";
 import { createLevels } from "./createLevels"
 import { createCalculations } from "./createCalulculations";
+import path from "path";
 config();
 
 const app: Express = express();
@@ -28,6 +29,9 @@ openConnection(uri);
 //ROUTERS
 app.use("/api/users", UserRouter);
 app.use("/api/levels", LevelRouter);
+
+const clientDir = path.join(__dirname, "client");
+app.use(`*`, express.static(clientDir));
 
 app.listen(PORT, () => {
     console.log(`Server is running on PORT: ${PORT}`);
