@@ -1,1 +1,2 @@
 VITE_USE_BACKEND=FALSE
+VITE_BACKEND_PATH="http://localhost:3000/api"

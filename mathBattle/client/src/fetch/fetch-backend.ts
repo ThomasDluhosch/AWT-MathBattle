@@ -1,5 +1,5 @@
 
-const backendPath = "http://localhost:3000/api"
+const backendPath = import.meta.env.VITE_BACKEND_PATH;
 
 export function fetchFromBackend (path: string, method: string, body: any) {
     return  fetch(backendPath + path, {
