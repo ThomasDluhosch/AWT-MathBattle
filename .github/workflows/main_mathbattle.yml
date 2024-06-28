@@ -33,11 +33,12 @@ jobs:
           cmd: install # will run `yarn install` command
           dir: 'mathBattle/client'
       - name: Create .env file frontend
-        uses: SpicyPizza/create-envfile@v2.0.3
-        with:
-          directory: 'mathBattle/client'
-          envkey_VITE_BACKEND_PATH: "https://mathbattle.azurewebsites.net/api"   
-          envkey_VITE_USE_BACKEND: "TRUE"   
+        run: |
+          cd ./mathBattle/client
+          touch .env
+          echo VITE_BACKEND_PATH: https://mathbattle.azurewebsites.net/api >> .env
+          echo VITE_USE_BACKEND: TRUE >> .env
+          cat .env 
           
       - name: Build production frontend
         uses: borales/actions-yarn@v4
