@@ -52,10 +52,9 @@ jobs:
           cmd: build # will run `yarn build` command
           dir: 'mathBattle/server'
           
-      - name: Copy client dir and .env
+      - name: Copy client dir
         run: |
            cp -a -r mathBattle/client/dist mathBattle/server/dist/client
-           cp mathBattle/server/.env.template mathBattle/server/.env
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
