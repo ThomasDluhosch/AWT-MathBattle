@@ -2,7 +2,7 @@ import { Typography, Box, Button, Grid } from "@mui/material";
 import { NavBar } from "../NavBar";
 import { useNavigate } from "react-router-dom";
 
-export function Credits() {
+export function CreditsPage() {
     const navigate = useNavigate();
     const returnToMap = () => {
         navigate("/");

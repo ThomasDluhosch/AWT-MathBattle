@@ -10,10 +10,10 @@ import { LevelSucceed } from "./Level/LevelSucceed.tsx";
 import { LevelFail } from "./Level/LevelFail.tsx";
 import { AuthenticatedRoute } from "./Authentication/AuthenticatedRoute.tsx";
 import { AuthProvider } from "./Authentication/AuthProvider.tsx";
-import { Credits } from "./StaticPages/Credits.tsx";
+import { CreditsPage } from "./StaticPages/CreditsPage.tsx";
 import { InstructionsPage } from "./StaticPages/InstructionsPage.tsx";
 import { Level } from "./Level/Level.tsx";
-import Options from "./StaticPages/Options.tsx";
+import OptionsPage from "./StaticPages/OptionsPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/options",
-    element: <Options />,
+    element: <OptionsPage />,
   },
   {
     path: "/",
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/credits",
-        element: <Credits />,
+        element: <CreditsPage />,
       },
       {
         path: "*",

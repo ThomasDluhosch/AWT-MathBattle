@@ -11,7 +11,7 @@ import Switch from "@mui/material/Switch";
 import { NavBar } from "../NavBar";
 import { useNavigate } from "react-router-dom";
 
-const Options: React.FC = () => {
+const OptionsPage: React.FC = () => {
   const [volume, setVolume] = useState<number>(30);
   const [font, setFont] = useState("");
 
@@ -82,4 +82,4 @@ const Options: React.FC = () => {
   );
 };
 
-export default Options;
+export default OptionsPage;
