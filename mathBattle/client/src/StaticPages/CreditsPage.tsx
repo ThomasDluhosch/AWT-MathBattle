@@ -31,7 +31,7 @@ export function CreditsPage() {
                     >
                         <Button
                             size="large"
-                            variant="outlined"
+                            variant="contained"
                             onClick={returnToMap}
                         >
                             Main Menu
