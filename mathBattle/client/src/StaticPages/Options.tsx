@@ -23,11 +23,6 @@ const Options: React.FC = () => {
     setVolume(newValue as number);
   };
 
-  const navigate = useNavigate();
-  const returnToMap = () => {
-    navigate("/");
-  };
-
   return (
     <div>
       <NavBar />
