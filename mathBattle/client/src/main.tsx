@@ -13,6 +13,7 @@ import { AuthProvider } from "./Authentication/AuthProvider.tsx";
 import { Credits } from "./StaticPages/Credits.tsx";
 import { InstructionsPage } from "./StaticPages/InstructionsPage.tsx";
 import { Level } from "./Level/Level.tsx";
+import Options from "./StaticPages/Options.tsx";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/instruction",
     element: <InstructionsPage />,
+  },
+  {
+    path: "/options",
+    element: <Options />,
   },
   {
     path: "/",
