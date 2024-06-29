@@ -5,10 +5,17 @@ import {
   ListItem,
   ListItemText,
   Box,
+  Button,
 } from "@mui/material";
 import { NavBar } from "../NavBar";
+import { useNavigate } from "react-router-dom";
 
 export function InstructionsPage() {
+  const navigate = useNavigate();
+    const returnToMap = () => {
+        navigate("/");
+    };
+    
   return (
     <div>
       <NavBar />
@@ -46,6 +53,11 @@ export function InstructionsPage() {
             ready to begin. Enjoy your adventure!
           </Typography>
         </Box>
+
+        <Button size="large" variant="contained" onClick={returnToMap}>
+          Main Menu
+        </Button>
+        
       </Container>
     </div>
   );
