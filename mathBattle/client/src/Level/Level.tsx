@@ -1,18 +1,25 @@
 import { Typography, Box, TextField, LinearProgress } from "@mui/material";
 import { NavBar } from "../NavBar";
 import {theme} from "../main-theme"
+import { useLevelBattleService } from "./useLevelBattleService";
+import { ILevelBattle } from "../Interfaces/ILevelBattle";
+import { useEffect, useState } from "react";
 
-export function Level() {
-    /*
-    const navigate = useNavigate();
-    const returnToMap = () => {
-        navigate("/map");
-    };
-    */
+export function Level(props: { levelID: number }) {
+
+    const getLevelBattle = useLevelBattleService();
+    const [levelBattle, setLevelBattle] = useState<ILevelBattle>();
+
+    useEffect(() => {
+        getLevelBattle(props.levelID).then((result) => {
+          if (result) setLevelBattle(result);
+        });
+      }, []);
 
     const time = 80;
-    const health = 95;
-
+    const maxHealth = levelBattle?.monsterHealth;   // initial health
+    const health = 10;
+      
     return (
 
         <div>
@@ -48,12 +55,12 @@ export function Level() {
 
                 <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'column', height:'22em', width: '40em', m: '1em', p:'1em'}}>
                     <Box sx={{height: "16em", border: 5, borderRadius:5, borderColor: theme.palette.primary.main, width: "100%", display: "flex", justifyContent: "center"}}>
-                        <img src="/public/monsters/SlimeBlue.svg" style={{}}/>
+                        <img src={levelBattle?.monsterPicture} style={{}}/>
                     </Box>
 
                     <Box sx={{mt: '2em', width:"80%"}}>
                         <LinearProgress color="primary" variant="determinate" value={health} sx={{height:"2em", width:"100%"}} />
-                        <Typography textAlign="center" variant="body1">{`${health} / 100 HP`}</Typography>
+                        <Typography textAlign="center" variant="body1">{`${health} / ${maxHealth}`}</Typography>
                     </Box>
 
                 </Box>

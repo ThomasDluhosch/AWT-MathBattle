@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { LoginPage } from "./Login/LoginPage.tsx";
 import { ThemeProvider } from "@mui/material";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, useParams } from "react-router-dom";
 import { theme } from "./main-theme.ts";
 import { LevelMapPage } from "./LevelMap/LevelMapPage.tsx";
 import { NotFound } from "./NotFound.tsx";
@@ -15,14 +15,19 @@ import { InstructionsPage } from "./StaticPages/InstructionsPage.tsx";
 import { Level } from "./Level/Level.tsx";
 import OptionsPage from "./StaticPages/OptionsPage.tsx";
 
+const LevelWrapper = () => {
+  const { id } = useParams(); 
+  return <Level levelID={Number(id)} />; 
+};
+
 const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
   },
   {
-    path: "/level",
-    element: <Level />,
+    path: "/level/:id",
+    element: <LevelWrapper />,
   },
   {
     path: "/instruction",
@@ -61,6 +66,7 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
