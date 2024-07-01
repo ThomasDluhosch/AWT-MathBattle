@@ -1,35 +1,108 @@
-import { Typography, Box, TextField, LinearProgress, Grid } from "@mui/material";
+import { Typography, Box, TextField, LinearProgress, Grid, Button } from "@mui/material";
 import { NavBar } from "../NavBar";
 import { theme } from "../main-theme"
 import { useLevelBattleService } from "./useLevelBattleService";
 import { ILevelBattle } from "../Interfaces/ILevelBattle";
-import { useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useAlertSnackbar } from "../useAlertSnackbar";
 
 const taskStyle = { border: 5, borderRadius: 5, borderColor: theme.palette.secondary.main };
-const barStyle = { height: "2em", width: "80%", ml: "10%" };
-export function Level(props: { levelID: number }) {
+const barStyle = { height: "1em", width: "80%", ml: "10%" };
 
+enum SolutionGiven {
+    NO,
+    CORRECT,
+    INCORRECT
+}
+
+export function Level(props: { levelID: number }) {
+    const timePerTask = 20;
     const getLevelBattle = useLevelBattleService();
+    const [setAlert, AlertBar] = useAlertSnackbar();
     const [levelBattle, setLevelBattle] = useState<ILevelBattle>();
     const [playerHealth, setPlayerHealth] = useState<number>(3);
+    const [solutionInput, setSolutionInput] = useState<number | undefined>(undefined);
+    const [currentTask, setCurTask] = useState<number>(0);
+    const [timeRemaining, setTimeRemaining] = useState<number>(timePerTask);
+    const [monsterHealth, setMonsterHealth] = useState<number>(0);
+    const [timeTotal, setTimeTotal] = useState<number>(0);
+    const [solutionGiven, setSolutionGiven] = useState<SolutionGiven>(SolutionGiven.NO);
 
     useEffect(() => {
         getLevelBattle(props.levelID).then((result) => {
-            if (result) setLevelBattle(result);
+            if (result) {
+                setLevelBattle(result);
+                setMonsterHealth(result.monsterHealth);
+            }
         });
     }, []);
 
-    const time = 80;
-    const maxHealth = levelBattle?.monsterHealth;   // initial health
-    const health = levelBattle?.monsterHealth;
+    useEffect(() => {
+        if (timeRemaining > 0 && solutionGiven == SolutionGiven.NO) {
+            const timer = setInterval(() => setTimeRemaining(timeRemaining - 1), 1000);
+            return () => { clearInterval(timer)};
+        } else if (solutionGiven == SolutionGiven.NO){
+            setAlert("Upps! Time has run out!", "error");
+            setPlayerHealth(playerHealth - 1);
+            setSolutionGiven(SolutionGiven.INCORRECT);
+        }
+        
+    }, [timeRemaining]);
+
     const getHealthInPercent = () => {
-        return health && maxHealth ? (maxHealth / health) * 100 : 0;
+        return monsterHealth && levelBattle?.monsterHealth ? (monsterHealth / levelBattle?.monsterHealth) * 100 : 0;
+    }
+    const getTimeInPercent = () => {
+        return (timeRemaining / timePerTask) * 100;
+    }
+
+    const checkSolution = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        let newMonsterHealth = monsterHealth;
+        let newPlayerHealth = playerHealth;
+        if (levelBattle?.tasks[currentTask].solution == solutionInput) {
+            setAlert("Correct! You did it!", "success");
+            const timeUsed = timePerTask - timeRemaining;
+            setTimeTotal(timeTotal + timeUsed);
+            const timeUsedPercentage = timeUsed / timePerTask;
+            if (timeUsedPercentage < 0.5) {
+                newMonsterHealth = monsterHealth - 10;
+            } else if (timeUsedPercentage > 0.8) {
+                newMonsterHealth = monsterHealth - 9
+            } else {
+                newMonsterHealth = monsterHealth - 8;
+            }
+            setMonsterHealth(newMonsterHealth);
+            setSolutionGiven(SolutionGiven.CORRECT);
+        } else {
+            setAlert("Upps! That's not correct!", "error");
+            newPlayerHealth = playerHealth - 1;
+            setPlayerHealth(newPlayerHealth);
+            setSolutionGiven(SolutionGiven.INCORRECT);
+        }
+        if (newPlayerHealth == 0) {
+            //TODO: game failed
+        } else if (newMonsterHealth == 0) {
+            //TODO: game succeded
+        } 
+
+    }
+
+    const changeSolutionInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setSolutionInput(parseInt(e.target.value));
+    }
+
+    function goToNextTask(): void {
+        setSolutionGiven(SolutionGiven.NO);
+        setCurTask(currentTask + 1);
+        setTimeRemaining(timePerTask);
     }
 
     return (
 
         <div>
             <NavBar />
+            <AlertBar />
             <Box textAlign='center' sx={{ m: 3, mt: 8 }}>
                 <Grid container>
                     <Grid item xs={12}>
@@ -40,19 +113,39 @@ export function Level(props: { levelID: number }) {
                         }
                     </Grid>
                     <Grid item xs={12} lg={6}>
-                        <Typography sx={taskStyle} variant="h1">99 + 1</Typography>
+                        <Typography sx={taskStyle} variant="h1">{
+                            levelBattle?.tasks[currentTask].task
+                        }
+                            <span style={{ color: solutionGiven == SolutionGiven.CORRECT ? "green" : "red" }}>
+                                {(solutionGiven == SolutionGiven.NO ? "" : " = " + levelBattle?.tasks[currentTask].solution)}
+                            </span>
+                        </Typography>
                         <br />
-                        <TextField
-                            sx={taskStyle} fullWidth placeholder="Solution"></TextField>
+                        <form onSubmit={(e) => checkSolution(e)}>
+                            <TextField
+                                sx={taskStyle}
+                                value={solutionInput ?? ""}
+                                onChange={(e) => changeSolutionInput(e)}
+                                type="number"
+                                fullWidth
+                                disabled={solutionGiven != SolutionGiven.NO}
+                                placeholder="Solution"></TextField>
+                        </form>
                         <br />
-                        <LinearProgress color="secondary" variant="determinate" value={time} sx={{ ...barStyle, mt: 2 }} />
+                        {
+                            solutionGiven != SolutionGiven.NO ?
+                                <Button onClick={() => goToNextTask()}>Next Task</Button>
+                                : <></>
+                        }
                         <br />
-                        <Typography textAlign="center" variant="body1">{`${time} seconds`}</Typography>
+                        <LinearProgress color="secondary" variant="determinate" value={getTimeInPercent()} sx={{ ...barStyle, mt: 2 }} />
+                        <br />
+                        <Typography textAlign="center" variant="body1">{`${timeRemaining} seconds`}</Typography>
                     </Grid>
                     <Grid item xs={12} lg={6}>
                         <LinearProgress color="primary" variant="determinate" value={getHealthInPercent()} sx={barStyle} />
                         <br />
-                        <Typography textAlign="center" variant="body1">{`${health} / ${maxHealth}`}</Typography>
+                        <Typography textAlign="center" variant="body1">{`${monsterHealth} / ${levelBattle?.monsterHealth}`}</Typography>
                         <br />
                         <img src={levelBattle?.monsterPicture} style={{ height: "16em" }} />
                     </Grid>
@@ -63,3 +156,6 @@ export function Level(props: { levelID: number }) {
         </div>
     );
 }
+
+
+
