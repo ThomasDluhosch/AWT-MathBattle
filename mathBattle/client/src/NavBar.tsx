@@ -38,6 +38,16 @@ export function NavBar() {
           >
             <Icon>settings</Icon>
           </IconButton>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="options"
+            sx={{ mr: 1 }}
+            href="/instruction"
+          >
+            <Icon>help</Icon>
+          </IconButton>
           {isLoggedIn() ? 
           <IconButton
             size="large"
