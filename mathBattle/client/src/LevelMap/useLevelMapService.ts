@@ -34,12 +34,12 @@ export function useLevelMapService() {
 const mockLevels: ILevel[] = [
     {
         number: 1,
-        completed: false,
+        completed: true,
         medals: {
-            addition: false,
-            division: false,
-            multiplication: false,
-            subtraction: false,
+            addition: true,
+            division: true,
+            multiplication: true,
+            subtraction: true,
         }
     },  {
         number: 2,
@@ -53,6 +53,7 @@ const mockLevels: ILevel[] = [
     },{
         number: 3,
         completed: false,
+        locked: true,
         medals: {
             addition: false,
             division: false,
@@ -62,6 +63,7 @@ const mockLevels: ILevel[] = [
     },{
         number: 4,
         completed: false,
+        locked: true,
         medals: {
             addition: false,
             division: false,

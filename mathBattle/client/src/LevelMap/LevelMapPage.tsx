@@ -33,7 +33,7 @@ export function LevelMapPage() {
             <br />
           </Grid>
           {levels.map((level) => (
-            <Grid item xs={12} md={6} lg={4} xl={3}>
+            <Grid item xs={6} md={4} lg={3} xl={2}>
               <LevelCard {...level} />
             </Grid>
           ))}
