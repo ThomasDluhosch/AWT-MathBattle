@@ -1,15 +1,11 @@
 import { useState } from "react";
 import { Alert, AlertColor, Snackbar } from "@mui/material";
 
-export function useAlertSnackbar() : [(msg: string, severity:AlertColor) => void, () => JSX.Element] {
+export function useAlertSnackbar() : [(msg: string, severity:AlertColor) => void, () => JSX.Element, () => void] {
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("");
     const [severity, setSeverity] = useState<AlertColor | undefined>("success");
     const handleClose = (_?: React.SyntheticEvent | Event, reason?: string) => {
-        if (reason === "clickaway") {
-            return;
-        }
-
         setOpen(false);
     };
 
@@ -22,7 +18,7 @@ export function useAlertSnackbar() : [(msg: string, severity:AlertColor) => void
         return (
             <Snackbar 
             open={open} 
-            autoHideDuration={5000} 
+            autoHideDuration={2000} 
             onClose={handleClose}
             anchorOrigin={{vertical:"top", horizontal:"center"}}>
                 <Alert onClose={handleClose} severity={severity} sx={{ width: "100%", mt:5}}>
@@ -33,6 +29,7 @@ export function useAlertSnackbar() : [(msg: string, severity:AlertColor) => void
     };
     return [
         display,
-        AlertSnackbar
+        AlertSnackbar,
+        handleClose
     ];
 }

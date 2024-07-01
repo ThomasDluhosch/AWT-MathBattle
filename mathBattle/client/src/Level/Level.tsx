@@ -18,7 +18,7 @@ enum SolutionGiven {
 export function Level(props: { levelID: number }) {
     const timePerTask = 20;
     const getLevelBattle = useLevelBattleService();
-    const [setAlert, AlertBar] = useAlertSnackbar();
+    const [setAlert, AlertBar, closeAlert] = useAlertSnackbar();
     const [levelBattle, setLevelBattle] = useState<ILevelBattle>();
     const [playerHealth, setPlayerHealth] = useState<number>(3);
     const [solutionInput, setSolutionInput] = useState<number | undefined>(undefined);
@@ -39,6 +39,7 @@ export function Level(props: { levelID: number }) {
 
     useEffect(() => {
         if (timeRemaining > 0 && solutionGiven == SolutionGiven.NO) {
+
             const timer = setInterval(() => setTimeRemaining(timeRemaining - 1), 1000);
             return () => { clearInterval(timer)};
         } else if (solutionGiven == SolutionGiven.NO){
@@ -47,7 +48,7 @@ export function Level(props: { levelID: number }) {
             setSolutionGiven(SolutionGiven.INCORRECT);
         }
         
-    }, [timeRemaining]);
+    }, [timeRemaining, solutionGiven]);
 
     const getHealthInPercent = () => {
         return monsterHealth && levelBattle?.monsterHealth ? (monsterHealth / levelBattle?.monsterHealth) * 100 : 0;
@@ -61,7 +62,7 @@ export function Level(props: { levelID: number }) {
         let newMonsterHealth = monsterHealth;
         let newPlayerHealth = playerHealth;
         if (levelBattle?.tasks[currentTask].solution == solutionInput) {
-            setAlert("Correct! You did it!", "success");
+            setSolutionGiven(SolutionGiven.CORRECT);
             const timeUsed = timePerTask - timeRemaining;
             setTimeTotal(timeTotal + timeUsed);
             const timeUsedPercentage = timeUsed / timePerTask;
@@ -73,12 +74,12 @@ export function Level(props: { levelID: number }) {
                 newMonsterHealth = monsterHealth - 8;
             }
             setMonsterHealth(newMonsterHealth);
-            setSolutionGiven(SolutionGiven.CORRECT);
+            setAlert("Correct! You did it!", "success");
         } else {
-            setAlert("Upps! That's not correct!", "error");
+            setSolutionGiven(SolutionGiven.INCORRECT);
             newPlayerHealth = playerHealth - 1;
             setPlayerHealth(newPlayerHealth);
-            setSolutionGiven(SolutionGiven.INCORRECT);
+            setAlert("Upps! That's not correct!", "error");
         }
         if (newPlayerHealth == 0) {
             //TODO: game failed
@@ -93,9 +94,11 @@ export function Level(props: { levelID: number }) {
     }
 
     function goToNextTask(): void {
+        closeAlert();
         setSolutionGiven(SolutionGiven.NO);
         setCurTask(currentTask + 1);
         setTimeRemaining(timePerTask);
+        setSolutionInput(undefined);
     }
 
     return (
