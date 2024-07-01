@@ -2,6 +2,7 @@ export interface ILevelStatistics {
     number: number,
     username: string 
     completed: boolean
+    locked: boolean
     medals: Medals
     score?: number
 }

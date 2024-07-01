@@ -6,7 +6,7 @@ export function LevelCard(props: ILevel) {
     return (
 
         <Card sx={{ minWidth: 100, backgroundColor: props.completed ? '#b5ccad' : props.locked ? "#d9d9d9" : '#a2a3dd' }} >
-            <CardActionArea href={"/level/" + props.number}>
+            <CardActionArea disabled={props.locked} href={"/level/" + props.number}>
                 <CardContent>
                     <Typography variant='h3'>
                         {props.locked ?

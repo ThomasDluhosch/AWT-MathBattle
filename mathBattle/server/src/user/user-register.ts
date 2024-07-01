@@ -2,8 +2,7 @@ import { Response, Request } from "express";
 import { UserModel } from "../database/users/UserModel";
 import { hashPassword } from "./hashing";
 import { IUser } from "../database/users/IUser";
-import { LevelStatisticsModel } from "../database/level-statistics/LevelStatisticsModel";
-import { LevelModel } from "../database/levels/LevelModel";
+import { initLevelStatistics } from "./initLevelStatistics";
 
 
 export async function registerUser(req: Request, res: Response) {
@@ -36,19 +35,3 @@ export async function registerUser(req: Request, res: Response) {
   });
 }
 
-async function initLevelStatistics(username: string) {
-  const numberOfLevels = await LevelModel.countDocuments();
-  for (let index = 1; index <= numberOfLevels; index++) {
-    await LevelStatisticsModel.create({
-      number: index,
-      username: username,
-      completed: false,
-      medals: {
-        addition: false,
-        subtraction: false,
-        multiplication: false,
-        division: false,
-      }
-    });
-  }
-}

@@ -217,6 +217,9 @@ components:
         completed:
           type: boolean
           example: true
+        locked:
+          type: boolean
+          example: true
         medals:
           type: object
           nullable: true
