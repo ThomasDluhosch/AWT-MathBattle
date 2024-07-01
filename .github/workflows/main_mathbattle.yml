@@ -82,4 +82,4 @@ jobs:
         app-name: 'mathbattle'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_634b14f775a3420caa0b7bbbe95741e5 }}
-        images: 'mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_978580db12dd44908b063956234d78c9 }}/appsvc/staticsite:${{ github.sha }}'
+        package: .
