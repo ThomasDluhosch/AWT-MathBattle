@@ -54,8 +54,8 @@ export function Level(props: { levelID: number }) {
 
 
                 <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'column', height:'22em', width: '40em', m: '1em', p:'1em'}}>
-                    <Box sx={{height: "16em", border: 5, borderRadius:5, borderColor: theme.palette.primary.main, width: "100%", display: "flex", justifyContent: "center"}}>
-                        <img src={levelBattle?.monsterPicture} style={{}}/>
+                    <Box sx={{height: "16em", border: 0, borderRadius:5, borderColor: theme.palette.primary.main, width: "100%", display: "flex", justifyContent: "center"}}>
+                        <img src={levelBattle?.monsterPicture} />
                     </Box>
 
                     <Box sx={{mt: '2em', width:"80%"}}>
