@@ -1,10 +1,12 @@
-import { Typography, Box, TextField, LinearProgress } from "@mui/material";
+import { Typography, Box, TextField, LinearProgress, Grid } from "@mui/material";
 import { NavBar } from "../NavBar";
-import {theme} from "../main-theme"
+import { theme } from "../main-theme"
 import { useLevelBattleService } from "./useLevelBattleService";
 import { ILevelBattle } from "../Interfaces/ILevelBattle";
 import { useEffect, useState } from "react";
 
+const taskStyle = { border: 5, borderRadius: 5, borderColor: theme.palette.secondary.main };
+const barStyle = { height: "2em", width: "80%", ml: "10%" };
 export function Level(props: { levelID: number }) {
 
     const getLevelBattle = useLevelBattleService();
@@ -12,60 +14,47 @@ export function Level(props: { levelID: number }) {
 
     useEffect(() => {
         getLevelBattle(props.levelID).then((result) => {
-          if (result) setLevelBattle(result);
+            if (result) setLevelBattle(result);
         });
-      }, []);
+    }, []);
 
     const time = 80;
     const maxHealth = levelBattle?.monsterHealth;   // initial health
-    const health = 10;
-      
+    const health = levelBattle?.monsterHealth; 
+    const getHealthInPercent = () => {
+        return health && maxHealth ? (maxHealth / health) * 100 : 0;
+    }
+
     return (
 
         <div>
             <NavBar />
-
-
-            <Box sx={{display: 'flex', justifyContent:'center', pt: '2em'}}>
-            <img src="/public/heart.svg" style={{ width: '5em'}}/>
-            <img src="/public/heart.svg" style={{ width: '5em'}}/>
-            <img src="/public/heart-lost.svg" style={{ width: '5em'}}/>
-            </Box>
-
-            <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap'}}>
-
-                <Box sx={{height: '22em', width: '40em', m: '1em', p:'1em', display: 'flex', justifyContent:'space-between', flexDirection:'column'}}>
-
-                    <Box sx={{border: 5, borderRadius: 5, borderColor: theme.palette.secondary.main, display: 'flex', justifyContent: 'center'}}>
-                        <Typography variant="h1">99 + 1</Typography>
-                    </Box>
-                  
-                    <Box sx={{border: 5, height:'5em', borderRadius: 5, borderColor: theme.palette.secondary.main, display: 'flex', justifyContent: 'center', mt: '2em'}}>
-                        <TextField fullWidth placeholder="Solution"></TextField>
-                    </Box>
-
-                    <Box sx={{mt: '2em', display:"flex", alignItems:"center", flexDirection:"column"}}>
-                        <LinearProgress color="secondary" variant="determinate" value={time} sx={{height:"2em", width:"80%"}} />
+            <Box textAlign='center' sx={{m:3, mt: 8 }}>
+                <Grid container>
+                    <Grid item xs={12}>
+                        <img src="/public/heart.svg" style={{ width: '5em' }} />
+                        <img src="/public/heart.svg" style={{ width: '5em' }} />
+                        <img src="/public/heart-lost.svg" style={{ width: '5em' }} />
+                    </Grid>
+                    <Grid item xs={12} lg={6}>
+                        <Typography sx={taskStyle} variant="h1">99 + 1</Typography>
+                        <br />
+                        <TextField
+                            sx={taskStyle} fullWidth placeholder="Solution"></TextField>
+                        <br />
+                        <LinearProgress color="secondary" variant="determinate" value={time} sx={{...barStyle, mt:2}} />
+                        <br />
                         <Typography textAlign="center" variant="body1">{`${time} seconds`}</Typography>
-                    </Box>
-
-                </Box>
-
-
-
-                <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'column', height:'22em', width: '40em', m: '1em', p:'1em'}}>
-                    <Box sx={{height: "16em", border: 0, borderRadius:5, borderColor: theme.palette.primary.main, width: "100%", display: "flex", justifyContent: "center"}}>
-                        <img src={levelBattle?.monsterPicture} />
-                    </Box>
-
-                    <Box sx={{mt: '2em', width:"80%"}}>
-                        <LinearProgress color="primary" variant="determinate" value={health} sx={{height:"2em", width:"100%"}} />
+                    </Grid>
+                    <Grid item xs={12} lg={6}>
+                        <LinearProgress color="primary" variant="determinate" value={getHealthInPercent()} sx={barStyle} />
+                        <br />
                         <Typography textAlign="center" variant="body1">{`${health} / ${maxHealth}`}</Typography>
-                    </Box>
-
-                </Box>
+                        <br />
+                        <img src={levelBattle?.monsterPicture} style={{ height: "16em" }} />
+                    </Grid>
+                </Grid>
             </Box>
-
 
 
         </div>
