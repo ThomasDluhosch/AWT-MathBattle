@@ -5,63 +5,34 @@ name: Build and deploy container app to Azure Web App - mathbattle
 
 on:
   push:
-    tags: 
-      - "**"
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: 'ubuntu-latest'
 
     steps:
-      - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-      - name: Set up Node.js version
-        uses: actions/setup-node@v1
-        with:
-          node-version: '20.x'
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
 
-      - name: Run install backend
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: install # will run `yarn install` command
-          dir: 'mathBattle/server'
-          
-      - name: Run install frontend
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: install # will run `yarn install` command
-          dir: 'mathBattle/client'
-      - name: Create .env file frontend
-        run: |
-          cd ./mathBattle/client
-          touch .env
-          echo VITE_BACKEND_PATH: https://mathbattle.azurewebsites.net/api >> .env
-          echo VITE_USE_BACKEND: TRUE >> .env
-          cat .env 
-          
-      - name: Build production frontend
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: build # will run `yarn build` command
-          dir: 'mathBattle/client'
+    - name: Log in to registry
+      uses: docker/login-action@v2
+      with:
+        registry: https://mcr.microsoft.com/
+        username: ${{ secrets.AzureAppService_ContainerUsername_f3d53881d7c941359dd282dfc0036c72 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_ffe77aa3dc424cb38ab1a29ddcfce907 }}
 
-      - name: Build production backend
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: build # will run `yarn build` command
-          dir: 'mathBattle/server'
-          
-      - name: Copy client dir
-        run: |
-           cp -a -r mathBattle/client/dist mathBattle/server/dist/client
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        tags: mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_f3d53881d7c941359dd282dfc0036c72 }}//appsvc/staticsite:${{ github.sha }}
+        file: ./Dockerfile
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
-        with:
-          name: node-app
-          path: ./mathBattle/server
-          
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -70,16 +41,11 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v2
-      with:
-          name: node-app
-          
     - name: Deploy to Azure Web App
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'mathbattle'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_634b14f775a3420caa0b7bbbe95741e5 }}
-        package: .
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_b91fe4eee0e545fc8790aebb7d4b0111 }}
+        images: 'mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_f3d53881d7c941359dd282dfc0036c72 }}//appsvc/staticsite:${{ github.sha }}'
