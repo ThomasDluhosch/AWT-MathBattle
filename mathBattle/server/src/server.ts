@@ -23,7 +23,6 @@ app.use(express.urlencoded({ extended: true }));
 
 const PORT: string | number = process.env.PORT || 1000;
 const uri: string = process.env.DB_PATH || "";
-console.log(uri);
 openConnection(uri);
 
 //ROUTERS
