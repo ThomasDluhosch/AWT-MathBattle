@@ -1,13 +1,17 @@
 import { Typography, Box, Button, Grid } from "@mui/material";
 import { NavBar } from "../NavBar";
 import { useNavigate } from "react-router-dom";
+import { useLevelId } from "./useLevelId";
 
 export function LevelFail() {
+  const levelId = useLevelId();
   const navigate = useNavigate();
   const returnToMap = () => {
     navigate("/map");
   };
-
+  const retry = () => {
+    navigate("/level/" + levelId )
+  };
   return (
     <div>
       <NavBar />
@@ -26,7 +30,7 @@ export function LevelFail() {
             <Button size="large" variant="outlined" onClick={returnToMap}>
               Main Menu
             </Button>
-            <Button size="large" variant="contained">
+            <Button size="large" variant="contained" onClick={retry}>
               TRY AGAIN
             </Button>
           </Grid>

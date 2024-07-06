@@ -48,7 +48,7 @@ const router = createBrowserRouter([
         element: <LevelSucceed />,
       },
       {
-        path: "/failed",
+        path: "/:id/failed",
         element: <LevelFail />,
       },
       {

@@ -100,8 +100,8 @@ export function Level() {
             newPlayerHealth = playerHealth - 1;
             setPlayerHealth(newPlayerHealth);
             setAlert("Upps! That's not correct!", "error");
-            if (newPlayerHealth == 0) {
-                //TODO: game failed
+            if (newPlayerHealth <= 0) {
+                navigate(`/${levelId}/failed`);
             }
         }
 
