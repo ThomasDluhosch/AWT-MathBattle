@@ -163,9 +163,6 @@ components:
     LevelSuccessInfo:
       type: object
       properties:
-        levelNumber: 
-          type: number
-          example: 1
         score: 
           type: number
           example: 110

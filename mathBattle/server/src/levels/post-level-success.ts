@@ -6,7 +6,6 @@ import { IUser } from "../database/users/IUser";
 
 
 interface LevelSuccessInfo {
-    levelNumber: number,
     score: number,
     calcType: CalcType
 }
@@ -23,19 +22,21 @@ export async function postLevelSuccess(req: Request, res: Response) {
     if (!user) return res.status(403).send("No user set");
     const successInfo = req.body as LevelSuccessInfo;
     if (!successInfo || !successInfo.score) return res.status(401).send("Info missing");
+    const numberLevel = parseInt(req.params.id);
+    if(isNaN(numberLevel)) return res.status(403).send("No level number");
 
-    const updateResult = await updateLevelScore(successInfo, user);
+    const updateResult = await updateLevelScore(successInfo, user, numberLevel);
     if (updateResult.matchedCount == 1) {
-        await unlockNextLevel(successInfo.levelNumber, user);
+        await unlockNextLevel(numberLevel, user);
         res.sendStatus(200);
     } else {
         res.sendStatus(404);
     }
 }
 
-async function updateLevelScore(successInfo: LevelSuccessInfo, user: IUser) {
+async function updateLevelScore(successInfo: LevelSuccessInfo, user: IUser, levelNumber : number) {
     const medalField = calcTypeToMedalField[successInfo.calcType];
-    const updateResult = await LevelStatisticsModel.updateOne({ number: successInfo.levelNumber, username: user.username }, {
+    const updateResult = await LevelStatisticsModel.updateOne({ number: levelNumber, username: user.username }, {
         $max: { score: successInfo.score },
         $set: { [medalField]: true, completed:true }
     });

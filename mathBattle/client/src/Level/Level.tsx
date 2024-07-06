@@ -5,6 +5,7 @@ import { useLevelBattleService } from "./useLevelBattleService";
 import { ILevelBattle } from "../Interfaces/ILevelBattle";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useAlertSnackbar } from "../useAlertSnackbar";
+import { fetchFromBackendAuth } from "../fetch/fetch-backend";
 
 const taskStyle = { border: 5, borderRadius: 5, borderColor: theme.palette.secondary.main };
 const barStyle = { height: "1em", width: "80%", ml: "10%" };
@@ -17,7 +18,7 @@ enum SolutionGiven {
 
 export function Level(props: { levelID: number }) {
     const timePerTask = 20;
-    const getLevelBattle = useLevelBattleService();
+    const [getLevelBattle, battleSuccess] = useLevelBattleService();
     const [setAlert, AlertBar, closeAlert] = useAlertSnackbar();
     const [levelBattle, setLevelBattle] = useState<ILevelBattle>();
     const [playerHealth, setPlayerHealth] = useState<number>(3);
@@ -41,13 +42,13 @@ export function Level(props: { levelID: number }) {
         if (timeRemaining > 0 && solutionGiven == SolutionGiven.NO) {
 
             const timer = setInterval(() => setTimeRemaining(timeRemaining - 1), 1000);
-            return () => { clearInterval(timer)};
-        } else if (solutionGiven == SolutionGiven.NO){
+            return () => { clearInterval(timer) };
+        } else if (solutionGiven == SolutionGiven.NO) {
             setAlert("Upps! Time has run out!", "error");
             setPlayerHealth(playerHealth - 1);
             setSolutionGiven(SolutionGiven.INCORRECT);
         }
-        
+
     }, [timeRemaining, solutionGiven]);
 
     const getHealthInPercent = () => {
@@ -83,9 +84,16 @@ export function Level(props: { levelID: number }) {
         }
         if (newPlayerHealth == 0) {
             //TODO: game failed
-        } else if (newMonsterHealth == 0) {
-            //TODO: game succeded
-        } 
+        } else if (newMonsterHealth <=  0) {
+            const score = 100;
+            battleSuccess(props.levelID, score).then((success) => {
+                if (!success) {
+                    setAlert("Sorry something went wrong.", "error");
+
+                }
+            })
+
+        }
 
     }
 
