@@ -3,12 +3,12 @@ import { NavBar } from "../NavBar";
 import { theme } from "../main-theme"
 import { useLevelBattleService } from "./useLevelBattleService";
 import { ILevelBattle } from "../Interfaces/ILevelBattle";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { useAlertSnackbar } from "../useAlertSnackbar";
 import { fetchFromBackendAuth } from "../fetch/fetch-backend";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLevelId } from "./useLevelId";
-
+const  useKeypress = require('react-use-keypress');
 const taskStyle = { border: 5, borderRadius: 5, borderColor: theme.palette.secondary.main };
 const barStyle = { height: "1em", width: "80%", ml: "10%" };
 
@@ -32,6 +32,10 @@ export function Level() {
     const [monsterHealth, setMonsterHealth] = useState<number>(0);
     const [timeTotal, setTimeTotal] = useState<number>(0);
     const [solutionGiven, setSolutionGiven] = useState<SolutionGiven>(SolutionGiven.NO);
+
+    useKeypress('Enter', () => {
+        if (solutionGiven != SolutionGiven.NO) goToNextTask();
+    });
 
     useEffect(() => {
         getLevelBattle(levelId).then((result) => {
@@ -85,7 +89,7 @@ export function Level() {
             setAlert("Correct! You did it!", "success");
             if (newMonsterHealth <= 0) {
                 const maxTime = (monsterHealth / 8 + 3) * timePerTask;
-                const score = maxTime - newTimeTotal  + playerHealth * 5;
+                const score = maxTime - newTimeTotal + playerHealth * 5;
                 battleSuccess(levelId, score).then((success) => {
                     if (!success) {
                         setAlert("Sorry something went wrong.", "error");
@@ -93,7 +97,7 @@ export function Level() {
                         navigate(`/${levelId}/succeed?score=${score}&time=${newTimeTotal}`);
                     }
                 })
-    
+
             }
         } else {
             setSolutionGiven(SolutionGiven.INCORRECT);
@@ -151,13 +155,13 @@ export function Level() {
                                 fullWidth
                                 disabled={solutionGiven != SolutionGiven.NO}
                                 placeholder="Solution"></TextField>
+                            <br />
+                            {
+                                solutionGiven != SolutionGiven.NO ?
+                                    <Button onClick={() => goToNextTask()}>Next Task (Enter)</Button>
+                                    : <></>
+                            }
                         </form>
-                        <br />
-                        {
-                            solutionGiven != SolutionGiven.NO ?
-                                <Button onClick={() => goToNextTask()}>Next Task</Button>
-                                : <></>
-                        }
                         <br />
                         <LinearProgress color="secondary" variant="determinate" value={getTimeInPercent()} sx={{ ...barStyle, mt: 2 }} />
                         <br />
