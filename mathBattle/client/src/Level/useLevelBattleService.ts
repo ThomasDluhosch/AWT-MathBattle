@@ -34,7 +34,6 @@ export function useLevelBattleService() : [(id: number | undefined) => Promise<I
         });
 
         if (response.status == 200) {
-            navigate(`/succeed?score=${score}`);
             return true;
         } else {
             return false;

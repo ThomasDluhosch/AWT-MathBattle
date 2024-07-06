@@ -15,10 +15,6 @@ import { InstructionsPage } from "./StaticPages/InstructionsPage.tsx";
 import { Level } from "./Level/Level.tsx";
 import OptionsPage from "./StaticPages/OptionsPage.tsx";
 
-const LevelWrapper = () => {
-  const { id } = useParams(); 
-  return <Level levelID={Number(id)} />; 
-};
 
 const router = createBrowserRouter([
   {
@@ -27,7 +23,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/level/:id",
-    element: <LevelWrapper />,
+    element: <Level />,
   },
   {
     path: "/instruction",
@@ -48,7 +44,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/succeed",
+        path: "/:id/succeed",
         element: <LevelSucceed />,
       },
       {

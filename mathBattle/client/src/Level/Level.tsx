@@ -6,6 +6,8 @@ import { ILevelBattle } from "../Interfaces/ILevelBattle";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useAlertSnackbar } from "../useAlertSnackbar";
 import { fetchFromBackendAuth } from "../fetch/fetch-backend";
+import { useNavigate, useParams } from "react-router-dom";
+import { useLevelId } from "./useLevelId";
 
 const taskStyle = { border: 5, borderRadius: 5, borderColor: theme.palette.secondary.main };
 const barStyle = { height: "1em", width: "80%", ml: "10%" };
@@ -16,8 +18,10 @@ enum SolutionGiven {
     INCORRECT
 }
 
-export function Level(props: { levelID: number }) {
+export function Level() {
     const timePerTask = 20;
+    const navigate = useNavigate();
+    const levelId = useLevelId();
     const [getLevelBattle, battleSuccess] = useLevelBattleService();
     const [setAlert, AlertBar, closeAlert] = useAlertSnackbar();
     const [levelBattle, setLevelBattle] = useState<ILevelBattle>();
@@ -30,7 +34,7 @@ export function Level(props: { levelID: number }) {
     const [solutionGiven, setSolutionGiven] = useState<SolutionGiven>(SolutionGiven.NO);
 
     useEffect(() => {
-        getLevelBattle(props.levelID).then((result) => {
+        getLevelBattle(levelId).then((result) => {
             if (result) {
                 setLevelBattle(result);
                 setMonsterHealth(result.monsterHealth);
@@ -65,7 +69,10 @@ export function Level(props: { levelID: number }) {
         if (levelBattle?.tasks[currentTask].solution == solutionInput) {
             setSolutionGiven(SolutionGiven.CORRECT);
             const timeUsed = timePerTask - timeRemaining;
-            setTimeTotal(timeTotal + timeUsed);
+            console.log(timeUsed);
+            console.log(timeTotal);
+            const newTimeTotal = timeTotal + timeUsed
+            setTimeTotal(newTimeTotal);
             const timeUsedPercentage = timeUsed / timePerTask;
             if (timeUsedPercentage < 0.5) {
                 newMonsterHealth = monsterHealth - 10;
@@ -76,23 +83,26 @@ export function Level(props: { levelID: number }) {
             }
             setMonsterHealth(newMonsterHealth);
             setAlert("Correct! You did it!", "success");
+            if (newMonsterHealth <= 0) {
+                const maxTime = (monsterHealth / 8 + 3) * timePerTask;
+                const score = maxTime - newTimeTotal  + playerHealth * 5;
+                battleSuccess(levelId, score).then((success) => {
+                    if (!success) {
+                        setAlert("Sorry something went wrong.", "error");
+                    } else {
+                        navigate(`/${levelId}/succeed?score=${score}&time=${newTimeTotal}`);
+                    }
+                })
+    
+            }
         } else {
             setSolutionGiven(SolutionGiven.INCORRECT);
             newPlayerHealth = playerHealth - 1;
             setPlayerHealth(newPlayerHealth);
             setAlert("Upps! That's not correct!", "error");
-        }
-        if (newPlayerHealth == 0) {
-            //TODO: game failed
-        } else if (newMonsterHealth <=  0) {
-            const score = 100;
-            battleSuccess(props.levelID, score).then((success) => {
-                if (!success) {
-                    setAlert("Sorry something went wrong.", "error");
-
-                }
-            })
-
+            if (newPlayerHealth == 0) {
+                //TODO: game failed
+            }
         }
 
     }
