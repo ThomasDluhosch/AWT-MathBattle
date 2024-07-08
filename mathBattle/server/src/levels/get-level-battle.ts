@@ -42,6 +42,9 @@ async function getTasks(level: ILevel, calcType: number) {
         { $match: calcFilter },
         { $project: { task: 1, solution: 1, _id: 0 } }
     ]);
+    if (allTasks.length < numberOfNeededTasks){
+        return [];
+    }
     // we cant do sample on the aggregate because of a bug in Azure Cosmos DB :(
     const randomTasks = sample(allTasks, {
         'size': numberOfNeededTasks,
