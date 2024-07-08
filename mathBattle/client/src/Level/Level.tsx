@@ -87,6 +87,7 @@ export function Level() {
                 newMonsterHealth = monsterHealth - 8;
             }
             setMonsterHealth(newMonsterHealth);
+            // TODO: add hurt / success sound here
             setAlert("Correct! You did it!", "success");
             if (newMonsterHealth <= 0) {
                 const maxTime = (monsterHealth / 8 + 3) * timePerTask;
@@ -104,6 +105,7 @@ export function Level() {
             setSolutionGiven(SolutionGiven.INCORRECT);
             newPlayerHealth = playerHealth - 1;
             setPlayerHealth(newPlayerHealth);
+            // TODO: add lose life sound here
             setAlert("Upps! That's not correct!", "error");
             if (newPlayerHealth <= 0) {
                 navigate(`/${levelId}/failed`);
