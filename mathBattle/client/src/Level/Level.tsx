@@ -8,7 +8,7 @@ import { useAlertSnackbar } from "../useAlertSnackbar";
 import { fetchFromBackendAuth } from "../fetch/fetch-backend";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLevelId } from "./useLevelId";
-const  useKeypress = require('react-use-keypress');
+import useKeypress from 'react-use-keypress';
 const taskStyle = { border: 5, borderRadius: 5, borderColor: theme.palette.secondary.main };
 const barStyle = { height: "1em", width: "80%", ml: "10%" };
 
@@ -47,6 +47,7 @@ export function Level() {
     }, []);
 
     useEffect(() => {
+        if(!levelBattle ) return;
         if (timeRemaining > 0 && solutionGiven == SolutionGiven.NO) {
 
             const timer = setInterval(() => setTimeRemaining(timeRemaining - 1), 1000);
@@ -57,7 +58,7 @@ export function Level() {
             setSolutionGiven(SolutionGiven.INCORRECT);
         }
 
-    }, [timeRemaining, solutionGiven]);
+    }, [timeRemaining, solutionGiven, levelBattle]);
 
     const getHealthInPercent = () => {
         return monsterHealth && levelBattle?.monsterHealth ? (monsterHealth / levelBattle?.monsterHealth) * 100 : 0;
@@ -89,7 +90,7 @@ export function Level() {
             setAlert("Correct! You did it!", "success");
             if (newMonsterHealth <= 0) {
                 const maxTime = (monsterHealth / 8 + 3) * timePerTask;
-                const score = maxTime - newTimeTotal + playerHealth * 5;
+                const score = maxTime - newTimeTotal + playerHealth * 10;
                 battleSuccess(levelId, score).then((success) => {
                     if (!success) {
                         setAlert("Sorry something went wrong.", "error");
@@ -131,6 +132,9 @@ export function Level() {
             <Box textAlign='center' sx={{ m: 3, mt: 8 }}>
                 <Grid container>
                     <Grid item xs={12}>
+                        <Typography variant="h4">Highscore: {levelBattle?.highscore}</Typography>
+                    </Grid>
+                    <Grid item xs={12}>
                         {
                             [1, 2, 3].map((v) => v <= playerHealth ?
                                 <img src="/public/heart.svg" style={{ width: '5em' }} /> :
@@ -154,7 +158,8 @@ export function Level() {
                                 type="number"
                                 fullWidth
                                 disabled={solutionGiven != SolutionGiven.NO}
-                                placeholder="Solution"></TextField>
+                                placeholder="Solution">
+                                </TextField>
                             <br />
                             {
                                 solutionGiven != SolutionGiven.NO ?

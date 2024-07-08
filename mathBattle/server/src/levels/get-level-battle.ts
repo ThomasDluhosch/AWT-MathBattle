@@ -9,8 +9,14 @@ var sample = require('@stdlib/random-sample');
 export async function getLevelBattle(req: Request, res: Response) {
     const numberLevel = req.params.id;
     if (!numberLevel) return res.status(403).send("No level number");
+
     const level = await LevelModel.findOne({ number: numberLevel });
     if (!level) return res.status(404).send("Level not found");
+
+    const user = req.user;
+    if(!user) return res.status(403).send("No user set");
+    const levelStats = await LevelStatisticsModel.findOne({ number: numberLevel, username: user.username });
+
     const calcTypeParam = req.query.calcType as string;
     let calcType = parseInt(calcTypeParam);
     if (isNaN(calcType)) calcType = 0;
@@ -18,7 +24,8 @@ export async function getLevelBattle(req: Request, res: Response) {
     res.status(200).send({
         monsterPicture: level.monsterPicture,
         monsterHealth: level.monsterHealth,
-        tasks: tasks
+        tasks: tasks,
+        highscore: levelStats?.score ?? 0
     });
 }
 

@@ -9,6 +9,7 @@ export async function initLevelStatistics(username: string) {
       username: username,
       completed: false,
       locked: index != 1,
+      score: 0,
       medals: {
         addition: false,
         subtraction: false,

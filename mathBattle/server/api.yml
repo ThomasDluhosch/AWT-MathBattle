@@ -253,6 +253,9 @@ components:
               solution:
                 type: number
                 example: 7
+              highscore:
+                type: number
+                example: 80
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme
       type: http

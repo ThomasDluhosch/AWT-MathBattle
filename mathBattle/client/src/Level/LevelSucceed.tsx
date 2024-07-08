@@ -1,4 +1,4 @@
-import { Typography, Box, Button, Grid, ButtonGroup } from "@mui/material";
+import { Typography, Box, Button, Grid, ButtonGroup, Icon } from "@mui/material";
 import { NavBar } from "../NavBar";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useLevelId } from "./useLevelId";
@@ -15,6 +15,9 @@ export function LevelSucceed() {
     const goNext = () => {
         navigate("/level/" + (levelId + 1))
     }
+    const retry = () => {
+        navigate("/level/" + levelId)
+    };
 
     return (
         <div>
@@ -38,12 +41,22 @@ export function LevelSucceed() {
                                 <Button
                                     variant="outlined"
                                     onClick={returnToMap}
+                                    startIcon={<Icon>home</Icon>}
                                 >
                                     Main Menu
                                 </Button>
                             </Grid>
                             <Grid item>
-                                <Button variant="contained"  onClick={goNext}>Next Level</Button>
+                                <Button variant="contained" 
+                                startIcon={<Icon>skip_next</Icon>}
+                                onClick={goNext}>Next Level</Button>
+                            </Grid>
+                            <Grid item>
+                                <Button variant="text"
+                                    startIcon={<Icon>repeat</Icon>}
+                                    onClick={retry}>
+                                    TRY AGAIN
+                                </Button>
                             </Grid>
                         </Grid>
                     </Grid>
