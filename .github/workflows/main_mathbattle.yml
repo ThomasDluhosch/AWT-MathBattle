@@ -5,8 +5,8 @@ name: Build and deploy container app to Azure Web App - mathbattle
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - release
   workflow_dispatch:
 
 jobs:
