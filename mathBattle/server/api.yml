@@ -158,6 +158,29 @@ paths:
           description: No level id given       
         '404':
           description: Level Id not found
+  /levels/{id}/highscores:
+    get:
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema: 
+            type: integer
+      tags:
+        - levels
+      summary: Get the 3 highest scores of the level
+      security:
+        - bearerAuth: []
+      operationId: getLevelHighscores
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LevelHighscores'  
+        '403':
+          description: No level id given       
 components:
   schemas:
     LevelSuccessInfo:
@@ -256,6 +279,17 @@ components:
               highscore:
                 type: number
                 example: 80
+    LevelHighscores:
+      type: array
+      items:
+        type: object
+        properties:
+          username:
+            type: string
+            example: "theUser"
+          score:
+            type: number
+            example: 60
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme
       type: http

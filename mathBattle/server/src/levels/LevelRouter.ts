@@ -6,6 +6,7 @@ import { authenticate } from "../middleware/authenticate";
 import { getLevel } from "./get-level";
 import { getLevelBattle } from "./get-level-battle";
 import { postLevelSuccess } from "./post-level-success";
+import { getLevelHighscores } from "./get-level-highscores";
 
 
 export const LevelRouter = Router();
@@ -15,3 +16,4 @@ LevelRouter.get("/", (req: Request, res: Response) => tryProcess(req, res, getLe
 LevelRouter.get("/:id", (req: Request, res: Response) => tryProcess(req, res, getLevel));
 LevelRouter.get("/:id/battle", (req: Request, res: Response) => tryProcess(req, res, getLevelBattle));
 LevelRouter.post("/:id/success", (req: Request, res: Response) => tryProcess(req, res, postLevelSuccess));
+LevelRouter.get("/:id/highscores", (req: Request, res: Response) => tryProcess(req, res, getLevelHighscores))
