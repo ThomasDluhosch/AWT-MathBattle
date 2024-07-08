@@ -1,12 +1,16 @@
 import { Card, CardContent, Typography, CardActions, Box, Button, CardActionArea, Icon } from "@mui/material";
 import { ILevel } from "../Interfaces/ILevel";
+import { CalcType } from "../Interfaces/CalcType";
 
 const medalStyle =  {backgroundColor:"white",border:0, borderRadius: 2, mr: 1, p:0.5};
-export function LevelCard(props: ILevel) {
+interface CardProps extends ILevel {
+    calcType: CalcType
+}
+export function LevelCard(props: CardProps) {
     return (
 
         <Card sx={{ minWidth: 100, backgroundColor: props.completed ? '#b5ccad' : props.locked ? "#d9d9d9" : '#a2a3dd' }} >
-            <CardActionArea disabled={props.locked} href={"/level/" + props.number}>
+            <CardActionArea disabled={props.locked} href={"/level/" + props.number + "?type=" + props.calcType}>
                 <CardContent>
                     <Typography variant='h3'>
                         {props.locked ?
