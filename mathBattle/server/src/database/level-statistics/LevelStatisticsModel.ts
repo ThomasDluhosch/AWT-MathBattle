@@ -14,6 +14,10 @@ const levelStatisticsSchema = new Schema<ILevelStatistics>({
         type: Boolean,
         require: true
     },
+    locked: {
+        type: Boolean,
+        require: true
+    },
     medals: {
         addition: Boolean,
         subtraction: Boolean,

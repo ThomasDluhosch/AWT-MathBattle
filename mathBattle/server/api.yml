@@ -8,7 +8,7 @@ externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
 servers:
-  - url: https://petstore3.swagger.io/api/v3
+  - url: http://localhost:3000/api
 paths:
   /users/login:
     post:
@@ -163,9 +163,6 @@ components:
     LevelSuccessInfo:
       type: object
       properties:
-        levelNumber: 
-          type: number
-          example: 1
         score: 
           type: number
           example: 110
@@ -215,6 +212,9 @@ components:
           type: number
           example: 1
         completed:
+          type: boolean
+          example: true
+        locked:
           type: boolean
           example: true
         medals:

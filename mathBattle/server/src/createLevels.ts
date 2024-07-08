@@ -1,10 +1,9 @@
 import { ILevel } from "./database/levels/ILevel";
 import { LevelModel } from "./database/levels/LevelModel";
 
-// createLevels();
 
 
-async function createLevels() {
+export async function createLevels() {
     const monsters = [
         "/public/monsters/FlyingEye.svg",
         "/public/monsters/RedBug.svg",

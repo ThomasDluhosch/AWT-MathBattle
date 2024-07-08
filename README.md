@@ -16,13 +16,12 @@ The goal is to beat the Math-Monster with fast and correct answers.
 
 To install and use this application first you have to:
 
--   Type `npm install` in `.../client`
--   Type `npm install` in `.../server`
+-   Type `yarn install` in `.../mathbattle`
 
 After you installed all packages you than have to start the application with:
 
--   Type `npm run dev` in `.../client`
--   Type `npm run dev` in `.../server`
+-   Type `yarn run dev` in `.../client`
+-   Type `yarn run dev` in `.../server`
 
 ## Credits
 

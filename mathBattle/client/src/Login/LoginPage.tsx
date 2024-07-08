@@ -1,41 +1,46 @@
 import { Box, Button, Grid, Typography, TextField } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
 import { NavBar } from '../NavBar'
+import { useLoginService } from './useLoginService';
+import { useState } from 'react';
+import { useRegisterService } from './useRegisterService';
 
 export function LoginPage() {
+  const [loginUser] = useLoginService();
+  const registerUser = useRegisterService();
 
-  const navigate = useNavigate()
-  const handleLogin = () => {
-    navigate('/map')
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const login = () => {
+    loginUser({ username: username, password: password })
   }
+  const register = () => {
+    registerUser({ username: username, password: password })
+  }
+
 
   return (
     <div>
-      <NavBar/>
-      <Box textAlign='center' sx={{ m: 10 }}>
+      <NavBar />
+      <Box textAlign='center' sx={{ m: 2 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography variant="h2" >
+            <img src='/public/MathBattle_logo.png'  style={{ maxHeight: "40vh" }}></img>
+            <br />
+            <Typography variant="h6" >
               Welcome
-            </Typography><br />
-            <Typography variant="h4" >
-              this is
-            </Typography><br />
-            <Typography variant="h2" >
-              Math Battle
-            </Typography><br />
+            </Typography>
           </Grid>
           <Grid item xs={12}>
-            <TextField id="username" label="Username" variant="outlined" />
+            <TextField id="username" label="Username" variant="outlined" value={username} onChange={(e) => setUsername(e.target.value)} />
           </Grid>
           <Grid item xs={12}>
-            <TextField id="password" label="Password" type="password" variant="outlined" />
+            <TextField id="password" label="Password" type="password" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} />
           </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" onClick={handleLogin}>Login</Button>
+            <Button variant="contained" onClick={login}>Login</Button>
           </Grid>
           <Grid item xs={12}>
-            <Button variant="outlined">Register</Button>
+            <Button variant="outlined" onClick={register}>Register</Button>
           </Grid>
         </Grid>
       </Box>

@@ -2,16 +2,17 @@ import { Request, Response } from "express";
 import { UserModel } from "../database/users/UserModel";
 import jwt from 'jsonwebtoken';
 import { hashPassword } from "./hashing";
+import { IUser } from "../database/users/IUser";
 
 
 export async function  loginUser(req: Request, res: Response) {
-    const user = req.body;
+    const user : IUser = req.body;
     const { username, password } = user;
+    console.log(username);
 
     const userFromDb = await UserModel.findOne({
         username: username,
     });
-
     if (!userFromDb) {
         return res.status(404).json({
             success: false,
