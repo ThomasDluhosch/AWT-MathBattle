@@ -2,6 +2,8 @@ import { Typography, Box, Button, Grid, ButtonGroup, Icon } from "@mui/material"
 import { NavBar } from "../NavBar";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useLevelId } from "./useLevelId";
+import { useState, useEffect } from "react";
+import { useLevelHighscoresService } from "./useLevelHighscoresService";
 
 export function LevelSucceed() {
     const navigate = useNavigate();
@@ -9,6 +11,16 @@ export function LevelSucceed() {
     const [searchParams, setSearchParams] = useSearchParams();
     const score = searchParams.get("score");
     const time = searchParams.get("time");
+    
+    const [levelHighscores, setLevelHighscores] = useState<[{username: String, score: Number}]>();
+    const getLevelHighscores = useLevelHighscoresService();
+
+    useEffect(() => {
+        getLevelHighscores(levelId).then((result) => {
+            if(result) setLevelHighscores(result);
+        });
+    }, []);
+
     const returnToMap = () => {
         navigate("/map");
     };
@@ -33,6 +45,10 @@ export function LevelSucceed() {
                         <Typography variant="h6">
                             Your score is {score}
                         </Typography>
+                        <Typography variant="h4">Highscores</Typography>
+                        {levelHighscores?.map((e) => (
+                            <Typography variant="h6">{e.username}: {e.score.toString()}</Typography>
+                        ))}
                     </Grid>
 
                     <Grid item xs={12}>
