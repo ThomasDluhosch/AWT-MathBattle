@@ -36,9 +36,8 @@ export function LevelMapPage() {
             <Typography variant="h2">
               Welcome {localStorage.getItem("username")}
             </Typography>
-            <br />
-            <Typography variant="h4">Pick a level</Typography>
-            <br />
+              <br />
+            <Typography variant="h4">Pick a hero</Typography>
           </Grid>
           <Grid item xs={12}>
             <ToggleButtonGroup
@@ -61,6 +60,9 @@ export function LevelMapPage() {
                 <img src="/characters/Division_Knight.svg" style={{ maxHeight: "120px" }}></img>
               </ToggleButton>
               </ToggleButtonGroup>
+          </Grid>
+          <Grid item xs={12}>
+          <Typography variant="h4">Pick a battle</Typography>
           </Grid>
           {levels.map((level) => (
             <Grid item xs={6} md={4} lg={3} xl={2}>
