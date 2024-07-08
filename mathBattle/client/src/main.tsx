@@ -13,6 +13,7 @@ import { AuthProvider } from "./Authentication/AuthProvider.tsx";
 import { CreditsPage } from "./StaticPages/CreditsPage.tsx";
 import { InstructionsPage } from "./StaticPages/InstructionsPage.tsx";
 import { Level } from "./Level/Level.tsx";
+import { LevelHighscores } from "./Level/LevelHighscores.tsx";
 import OptionsPage from "./StaticPages/OptionsPage.tsx";
 
 
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "/:id/failed",
         element: <LevelFail />,
+      },
+      {
+        path: "/:id/highscores",
+        element: <LevelHighscores />,
       },
       {
         path: "/credits",
