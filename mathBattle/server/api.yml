@@ -96,6 +96,34 @@ paths:
                 $ref: '#/components/schemas/Level'  
         '403':
           description: No user
+  /levels/{id}/success:
+    post:
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema: 
+            type: integer
+      tags:
+        - levels
+      summary: Report the Successful completion of a level
+      security:
+        - bearerAuth: []
+      operationId: postLevelSuccess
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LevelSuccessInfo'  
+      responses:
+        '200':
+          description: Successful operation
+        '403':
+          description: No user
+        '401':
+          description: Info missing
+        '404':
+          description: Specified level not found
   /levels/{id}/battle:
     get:
       parameters: 
@@ -132,6 +160,20 @@ paths:
           description: Level Id not found
 components:
   schemas:
+    LevelSuccessInfo:
+      type: object
+      properties:
+        levelNumber: 
+          type: number
+          example: 1
+        score: 
+          type: number
+          example: 110
+        calcType: 
+          type: number
+          enum: [0,1,2,3]
+          description: 0 for addition, 1 for subtraction, 2 for multiplication, 3 for division
+          example: 0
     User:
       type: object
       properties:

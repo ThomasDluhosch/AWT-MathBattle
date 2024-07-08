@@ -6,7 +6,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { theme } from "./main-theme.ts";
 import { LevelMapPage } from "./LevelMap/LevelMapPage.tsx";
 import { NotFound } from "./NotFound.tsx";
-import { LevelSucceed } from "./LevelMap/LevelSucceed.tsx";
+import { LevelSucceed } from "./Level/LevelSucceed.tsx";
+import { LevelFail } from "./Level/LevelFail.tsx";
 
 const router = createBrowserRouter([
     {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
     {
         path: "/succeed",
         element: <LevelSucceed />,
+    },
+    {
+        path: "/failed",
+        element: <LevelFail />,
     },
     {
         path: "/map",

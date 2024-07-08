@@ -1,7 +1,13 @@
 import { Typography, Box, Button, Grid, ButtonGroup } from "@mui/material";
 import { NavBar } from "../NavBar";
+import { useNavigate } from "react-router-dom";
 
 export function LevelSucceed() {
+    const navigate = useNavigate();
+    const returnToMap = () => {
+        navigate("/map");
+    };
+
     return (
         <div>
             <NavBar />
@@ -19,8 +25,19 @@ export function LevelSucceed() {
                     </Grid>
 
                     <Grid item xs={12}>
-                        <Button variant="outlined">Main Menu</Button>
-                        <Button variant="contained">Next Level</Button>
+                        <Grid container spacing={2} justifyContent="center">
+                            <Grid item>
+                                <Button
+                                    variant="outlined"
+                                    onClick={returnToMap}
+                                >
+                                    Main Menu
+                                </Button>
+                            </Grid>
+                            <Grid item>
+                                <Button variant="contained">Next Level</Button>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Box>
