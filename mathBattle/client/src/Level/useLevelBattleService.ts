@@ -34,7 +34,7 @@ export function useLevelBattleService() : [(id: number | undefined) => Promise<I
         if (authContext.token == null) return undefined;
         const response = await fetchFromBackendAuth(`/levels/${id}/success`, "POST", authContext.token, {
             score: score,
-            calcType: 0
+            calcType: calcType
         });
 
         if (response.status == 200) {

@@ -7,7 +7,7 @@ export function LevelFail() {
   const levelId = useLevelId();
   const navigate = useNavigate();
   const returnToMap = () => {
-    navigate("/map");
+    navigate("/");
   };
   const retry = () => {
     navigate("/level/" + levelId)

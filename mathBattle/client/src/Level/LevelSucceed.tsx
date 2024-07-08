@@ -10,7 +10,7 @@ export function LevelSucceed() {
     const score = searchParams.get("score");
     const time = searchParams.get("time");
     const returnToMap = () => {
-        navigate("/map");
+        navigate("/");
     };
     const goNext = () => {
         navigate("/level/" + (levelId + 1))
