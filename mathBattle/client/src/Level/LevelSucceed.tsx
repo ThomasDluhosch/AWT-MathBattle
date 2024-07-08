@@ -22,7 +22,7 @@ export function LevelSucceed() {
     }, []);
 
     const returnToMap = () => {
-        navigate("/map");
+        navigate("/");
     };
     const goNext = () => {
         navigate("/level/" + (levelId + 1))
