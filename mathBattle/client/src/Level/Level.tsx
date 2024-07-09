@@ -47,7 +47,7 @@ export function Level() {
     }, []);
 
     useEffect(() => {
-        if(!levelBattle ) return;
+        if (!levelBattle) return;
         if (timeRemaining > 0 && solutionGiven == SolutionGiven.NO) {
 
             const timer = setInterval(() => setTimeRemaining(timeRemaining - 1), 1000);
@@ -69,13 +69,12 @@ export function Level() {
 
     const checkSolution = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (solutionInput == undefined) return;
         let newMonsterHealth = monsterHealth;
         let newPlayerHealth = playerHealth;
         if (levelBattle?.tasks[currentTask].solution == solutionInput) {
             setSolutionGiven(SolutionGiven.CORRECT);
             const timeUsed = timePerTask - timeRemaining;
-            console.log(timeUsed);
-            console.log(timeTotal);
             const newTimeTotal = timeTotal + timeUsed
             setTimeTotal(newTimeTotal);
             const timeUsedPercentage = timeUsed / timePerTask;
@@ -154,6 +153,9 @@ export function Level() {
                         <br />
                         <form onSubmit={(e) => checkSolution(e)}>
                             <TextField
+                                id="solution"
+                                autoFocus
+                                inputRef={(input) => input && solutionGiven == SolutionGiven.NO && input.focus()}
                                 sx={taskStyle}
                                 value={solutionInput ?? ""}
                                 onChange={(e) => changeSolutionInput(e)}
@@ -161,11 +163,14 @@ export function Level() {
                                 fullWidth
                                 disabled={solutionGiven != SolutionGiven.NO}
                                 placeholder="Solution">
-                                </TextField>
+                            </TextField>
                             <br />
                             {
                                 solutionGiven != SolutionGiven.NO ?
-                                    <Button onClick={() => goToNextTask()}>Next Task (Enter)</Button>
+                                    <>
+                                        <Typography  variant="body2">Press Enter to proceed</Typography>
+                                        <Button onClick={() => goToNextTask()}>Next Task </Button>
+                                    </>
                                     : <></>
                             }
                         </form>
