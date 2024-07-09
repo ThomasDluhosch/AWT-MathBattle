@@ -4,7 +4,7 @@ import { fetchFromBackendAuth } from "../fetch/fetch-backend";
 import { ILevelBattle } from "../Interfaces/ILevelBattle";
 import { CalcType } from "../Interfaces/CalcType";
 
-export function useLevelBattleService() : [(id: number | undefined) => Promise<ILevelBattle | undefined>, (id: number | undefined, score: number) => Promise<boolean | undefined>] {
+export function useLevelBattleService() : [(id: number | undefined) => Promise<ILevelBattle | undefined>, (id: number | undefined, score: number) => Promise<boolean | undefined>, CalcType] {
     const navigate = useNavigate();
     const authContext = useAuthentication();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -45,5 +45,5 @@ export function useLevelBattleService() : [(id: number | undefined) => Promise<I
     }
 
 
-    return [getLevelBattle, battleSuccess];
+    return [getLevelBattle, battleSuccess, calcType];
 }

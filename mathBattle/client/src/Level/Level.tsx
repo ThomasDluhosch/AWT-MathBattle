@@ -9,6 +9,7 @@ import { fetchFromBackendAuth } from "../fetch/fetch-backend";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLevelId } from "./useLevelId";
 import useKeypress from 'react-use-keypress';
+import { characters } from "../Interfaces/Characters";
 const taskStyle = { border: 5, borderRadius: 5, borderColor: theme.palette.secondary.main };
 const barStyle = { height: "1em", width: "80%", ml: "10%" };
 
@@ -22,7 +23,7 @@ export function Level() {
     const timePerTask = 20;
     const navigate = useNavigate();
     const levelId = useLevelId();
-    const [getLevelBattle, battleSuccess] = useLevelBattleService();
+    const [getLevelBattle, battleSuccess, calcType] = useLevelBattleService();
     const [setAlert, AlertBar, closeAlert] = useAlertSnackbar();
     const [levelBattle, setLevelBattle] = useState<ILevelBattle>();
     const [playerHealth, setPlayerHealth] = useState<number>(3);
@@ -143,12 +144,15 @@ export function Level() {
                         }
                     </Grid>
                     <Grid item xs={12} lg={6}>
-                        <Typography sx={taskStyle} variant="h1">{
+                        <Typography sx={taskStyle} variant="h1">
+                   
+                            {
                             levelBattle?.tasks[currentTask].task
                         }
                             <span style={{ color: solutionGiven == SolutionGiven.CORRECT ? "green" : "red" }}>
                                 {(solutionGiven == SolutionGiven.NO ? "" : " = " + levelBattle?.tasks[currentTask].solution)}
                             </span>
+                            
                         </Typography>
                         <br />
                         <form onSubmit={(e) => checkSolution(e)}>
@@ -184,7 +188,8 @@ export function Level() {
                         <br />
                         <Typography textAlign="center" variant="body1">{`${monsterHealth} / ${levelBattle?.monsterHealth}`}</Typography>
                         <br />
-                        <img src={levelBattle?.monsterPicture} style={{ height: "16em" }} />
+                        <img src={characters.get(calcType)} style={{ maxHeight: "16em", marginRight: 20 }}></img>
+                        <img src={levelBattle?.monsterPicture} style={{ height: "16em", marginLeft: 20 }} />
                     </Grid>
                 </Grid>
             </Box>

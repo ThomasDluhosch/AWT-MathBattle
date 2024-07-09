@@ -11,6 +11,7 @@ import { NavBar } from "../NavBar";
 import { useLevelMapService } from "./useLevelMapService";
 import { useEffect, useState } from "react";
 import { CalcType } from "../Interfaces/CalcType";
+import { characters } from "../Interfaces/Characters";
 
 
 export function LevelMapPage() {
@@ -47,18 +48,13 @@ export function LevelMapPage() {
               onChange={handleCalcTypeChange}
               aria-label="Your hero"
             >
-              <ToggleButton value={CalcType.ADD} key="addition">
-                <img src="/characters/Addition_Knight.svg" style={{ maxHeight: "120px" }}></img>
-              </ToggleButton>
-              <ToggleButton value={CalcType.SUBTRACT} key="substract">
-                <img src="/characters/Subtraction_Knight.svg" style={{ maxHeight: "120px" }}></img>
-              </ToggleButton>
-              <ToggleButton value={CalcType.MULTIPLICATE} key="mult">
-                <img src="/characters/Multiplication_Knight.svg" style={{ maxHeight: "120px" }}></img>
-              </ToggleButton>
-              <ToggleButton value={CalcType.DIVIDE} key="divide">
-                <img src="/characters/Division_Knight.svg" style={{ maxHeight: "120px" }}></img>
-              </ToggleButton>
+              {
+                [CalcType.ADD, CalcType.SUBTRACT, CalcType.MULTIPLICATE, CalcType.DIVIDE].map((calc : CalcType) => 
+                  <ToggleButton value={calc} key="addition">
+                  <img src={characters.get(calc)} style={{ maxHeight: "120px" }}></img>
+                </ToggleButton>
+                )
+              }
               </ToggleButtonGroup>
           </Grid>
           <Grid item xs={12}>
