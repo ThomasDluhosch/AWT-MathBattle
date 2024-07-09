@@ -37,7 +37,7 @@ export function LevelSucceed() {
         navigate("/level/" + (levelId + 1) + "?type=" + curCalcType)
     }
     const retry = () => {
-        navigate("/level/" + levelId)
+        navigate("/level/" + levelId + "?type=" + curCalcType)
     };
 
     return (
