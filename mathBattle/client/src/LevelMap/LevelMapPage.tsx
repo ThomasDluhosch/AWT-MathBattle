@@ -65,7 +65,7 @@ export function LevelMapPage() {
           <Typography variant="h4">Pick a battle</Typography>
           </Grid>
           {levels.map((level) => (
-            <Grid item xs={6} md={4} lg={3} xl={2}>
+            <Grid  item xs={6} md={4} lg={3} xl={2}>
               <LevelCard {...level} calcType={calcType} />
             </Grid>
           ))}
