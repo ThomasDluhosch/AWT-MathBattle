@@ -96,7 +96,7 @@ export function Level() {
                     if (!success) {
                         setAlert("Sorry something went wrong.", "error");
                     } else {
-                        navigate(`/${levelId}/succeed?score=${score}&time=${newTimeTotal}`);
+                        navigate(`/${levelId}/succeed?score=${score}&time=${newTimeTotal}&type=${calcType}`);
                     }
                 })
 
