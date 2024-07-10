@@ -56,6 +56,56 @@ paths:
                 $ref: '#/components/schemas/SuccessResponse'  
         '400':
           description: Username already in use
+  /users/{id}:
+    get:
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema: 
+            type: string
+      tags:
+        - users
+      summary: Get the user's options
+      operationId: getUserOptions
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Options' 
+        '403':
+          description: 'No user set'
+        '404':
+          description: 'User not found'
+    post:
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema: 
+            type: string
+      tags:
+        - users
+      summary: Update the user's options
+      operationId: postUserOptions
+      requestBody:
+        description: Update options of the user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Options'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '401':
+          description: 'Info missing'
+        '403':
+          description: 'No user set'
+        '404':
+          description: 'Specified user not found'
   /levels:
     get:
       tags:
@@ -203,6 +253,19 @@ components:
         password:
           type: string
           example: '12345'
+    Options:
+      type: object
+      properties:
+        gameMode:
+          type: string
+          enum: ['multiple choice', 'type it']
+          example: 'type it'
+        soundVolume:
+          type: number
+          example: 50
+        fontSize:
+          type: number
+          example: 16
     UserResponse:
       type: object
       properties:
