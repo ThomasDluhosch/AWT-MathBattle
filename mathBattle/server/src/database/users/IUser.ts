@@ -5,7 +5,7 @@ export interface IUser {
 }
 
 export interface IOptions {
-    gameTimer: boolean,
+    gameMode: 'multiple choice' | 'type yourself';
     soundVolume: number,
     fontSize: number
 }

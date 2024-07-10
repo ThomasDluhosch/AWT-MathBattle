@@ -13,7 +13,11 @@ const userSchema = new Schema<IUser>({
     options: {
         soundVolume: Number,
         fontSize: Number,
-        gameTimer: Boolean
+        gameMode: {
+            type: String, 
+            enum: ['multiple choice', 'type it'], 
+            //required: true 
+        }
     },
    
 });
