@@ -258,8 +258,8 @@ components:
       properties:
         gameMode:
           type: string
-          enum: ['multiple choice', 'type it']
-          example: 'type it'
+          enum: ['multiple choice', 'type yourself']
+          example: 'type yourself'
         soundVolume:
           type: number
           example: 50

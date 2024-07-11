@@ -15,7 +15,7 @@ const userSchema = new Schema<IUser>({
         fontSize: Number,
         gameMode: {
             type: String, 
-            enum: ['multiple choice', 'type it'], 
+            enum: ['multiple choice', 'type yourself'], 
             //required: true 
         }
     },
