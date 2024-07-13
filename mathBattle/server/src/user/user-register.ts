@@ -10,6 +10,13 @@ export async function registerUser(req: Request, res: Response) {
 
   const { username, password }: IUser = user;
 
+  if (username == "") {
+    res.status(412).json({
+      message: "No username given",
+    });
+    return;
+  }
+
   const userFromDb = await UserModel.findOne({
     username: username,
   });
