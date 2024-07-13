@@ -5,6 +5,6 @@ export enum GameMode {
 
 export interface IOptions {
     gameMode: GameMode;
-    soundVolume: number,
-    fontSize: number
+    soundVolume?: number,
+    fontSize?: number
 }

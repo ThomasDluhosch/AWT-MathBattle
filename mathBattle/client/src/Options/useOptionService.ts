@@ -3,14 +3,14 @@ import { useAuthentication } from "../Authentication/useAuthentication";
 import { fetchFromBackend, fetchFromBackendAuth } from "../fetch/fetch-backend";
 import { GameMode, IOptions } from "../Interfaces/IOptions";
 
-export function useOptionService() {
+export function useOptionService() : [() => Promise<IOptions | undefined>, (options: IOptions) => Promise<boolean>] {
 
     const navigate = useNavigate();
     const authContext = useAuthentication();
 
     const getOptions = async () => {
         if (import.meta.env.VITE_USE_BACKEND != "TRUE") {
-           return {gameMode: GameMode.TYPING};
+           return {gameMode: GameMode.TYPING} as IOptions;
         }
 
         if (authContext.token == null) return undefined;
@@ -30,7 +30,26 @@ export function useOptionService() {
         }
     }
 
+    const setOptions = async (options : IOptions) => {
 
-    return getOptions;
+        if (authContext.token == null) return false;
+        const optionsResponse = await fetchFromBackendAuth("/users/options", "post", authContext.token, options);
+        
+        console.log(optionsResponse.status);
+        
+        if (optionsResponse.status == 403) {
+            authContext.setToken(null);
+            navigate("/login");
+            return false;
+        } else if (optionsResponse.status == 200) {
+            return true;
+        } else {
+            console.log(optionsResponse.status);
+            return false;
+        }
+    }
+
+
+    return [getOptions, setOptions];
 
 }

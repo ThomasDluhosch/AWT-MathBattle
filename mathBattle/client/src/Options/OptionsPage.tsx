@@ -12,11 +12,12 @@ import { NavBar } from "../NavBar";
 import { useNavigate } from "react-router-dom";
 import { GameMode } from "../Interfaces/IOptions";
 import { useOptionService } from "./useOptionService";
+import { useAlertSnackbar } from "../useAlertSnackbar";
 
 function OptionsPage() {
 
-	const getOptions = useOptionService();
-
+	const [getOptions, setOptions] = useOptionService();
+	const [setAlert, AlertBar, closeAlert] = useAlertSnackbar();
 	const [gameMode, setGameMode] = useState<GameMode>(0);
 
 	const handleChange = (event: SelectChangeEvent) => {
@@ -26,13 +27,17 @@ function OptionsPage() {
 	useEffect(() => {
 		getOptions().then((result) => {
 		  if (result) setGameMode(result.gameMode);
-		 
 		});
 	  }, []);
 
 	const navigate = useNavigate();
-	const returnToMap = () => {
-		navigate("/");
+	const save = async () => {
+		const success =  await setOptions({
+			gameMode: gameMode
+		});
+		if(success){
+			setAlert("Saved", "success");
+		}
 	};
 
 
@@ -42,7 +47,7 @@ function OptionsPage() {
 			<NavBar />
 
 			<Box textAlign='center' sx={{ m: 2 }}>
-
+<AlertBar></AlertBar>
 				<Grid container spacing={4}>
 
 					<Grid item xs={12}>
@@ -68,7 +73,7 @@ function OptionsPage() {
 					</Grid>
 
 					<Grid item xs={12}>
-						<Button onClick={() => navigate(-1)} variant="contained">Go back</Button><br />
+						<Button onClick={save} variant="contained">Save</Button><br />
 					</Grid>
 
 				</Grid>
