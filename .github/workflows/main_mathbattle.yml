@@ -32,6 +32,7 @@ jobs:
         push: true
         tags: crmathbattle.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_f3d53881d7c941359dd282dfc0036c72 }}:${{ github.sha }}
         file: ./mathBattle/Dockerfile
+        context: ./mathBattle
 
   deploy:
     runs-on: ubuntu-latest
