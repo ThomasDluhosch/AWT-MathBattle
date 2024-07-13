@@ -25,7 +25,7 @@ const taskStyle = {
   borderColor: theme.palette.secondary.main,
 };
 const barStyle = { height: "1em", width: "80%", ml: "10%" };
-import { Howl, Howler } from "howler";
+import { Howl } from "howler";
 import hurt from "../sounds/hurt.mp3";
 import slash from "../sounds/slash.mp3";
 
