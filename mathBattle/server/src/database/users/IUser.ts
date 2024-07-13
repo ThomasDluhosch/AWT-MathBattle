@@ -4,8 +4,13 @@ export interface IUser {
     options: IOptions
 }
 
+export enum GameMode {
+    MULTIPLE_CHOICE,
+    TYPING
+}
+
 export interface IOptions {
-    gameMode: 'multiple choice' | 'type yourself';
+    gameMode: GameMode;
     soundVolume: number,
     fontSize: number
 }

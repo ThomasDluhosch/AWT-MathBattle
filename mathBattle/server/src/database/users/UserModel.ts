@@ -1,5 +1,5 @@
 import { Model, Schema, model } from "mongoose";
-import { IUser } from "./IUser";
+import { GameMode, IUser } from "./IUser";
 
 const userSchema = new Schema<IUser>({
     username: {
@@ -14,8 +14,8 @@ const userSchema = new Schema<IUser>({
         soundVolume: Number,
         fontSize: Number,
         gameMode: {
-            type: String, 
-            enum: ['multiple choice', 'type yourself'], 
+            type: Number, 
+            enum: [GameMode.MULTIPLE_CHOICE, GameMode.TYPING], 
             //required: true 
         }
     },

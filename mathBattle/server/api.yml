@@ -56,14 +56,8 @@ paths:
                 $ref: '#/components/schemas/SuccessResponse'  
         '400':
           description: Username already in use
-  /users/{id}:
+  /users/options:
     get:
-      parameters: 
-        - in: path
-          name: id
-          required: true
-          schema: 
-            type: string
       tags:
         - users
       summary: Get the user's options
@@ -80,12 +74,6 @@ paths:
         '404':
           description: 'User not found'
     post:
-      parameters: 
-        - in: path
-          name: id
-          required: true
-          schema: 
-            type: string
       tags:
         - users
       summary: Update the user's options
@@ -257,9 +245,9 @@ components:
       type: object
       properties:
         gameMode:
-          type: string
-          enum: ['multiple choice', 'type yourself']
-          example: 'type yourself'
+          type: number
+          enum: [0,1]
+          example: 0
         soundVolume:
           type: number
           example: 50

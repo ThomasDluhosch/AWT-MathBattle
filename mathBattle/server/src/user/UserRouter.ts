@@ -11,5 +11,5 @@ export const UserRouter = Router();
 
 UserRouter.post("/login", (req: Request, res: Response) => tryProcess(req, res, loginUser));
 UserRouter.post("/register", (req: Request, res: Response) => tryProcess(req, res, registerUser));
-UserRouter.get("/:id", (req: Request, res: Response) => tryProcess(req, res, getUserOptions));
-UserRouter.post("/:id", (req: Request, res: Response) => tryProcess(req, res, postUserOptions));
+UserRouter.get("/options", (req: Request, res: Response) => tryProcess(req, res, getUserOptions));
+UserRouter.post("/options", (req: Request, res: Response) => tryProcess(req, res, postUserOptions));

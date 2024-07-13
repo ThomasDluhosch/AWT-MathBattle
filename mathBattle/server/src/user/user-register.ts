@@ -1,14 +1,9 @@
 import { Response, Request } from "express";
 import { UserModel } from "../database/users/UserModel";
 import { hashPassword } from "./hashing";
-import { IUser } from "../database/users/IUser";
+import { GameMode, IOptions, IUser } from "../database/users/IUser";
 import { initLevelStatistics } from "./initLevelStatistics";
 
-interface UserOptions {
-  gameMode: 'multiple choice' | 'type yourself';
-  soundVolume: number,
-  fontSize: number
-}
 
 export async function registerUser(req: Request, res: Response) {
   const user = req.body;
@@ -27,8 +22,8 @@ export async function registerUser(req: Request, res: Response) {
   }
 
   const hashedPwd = hashPassword(password);
-  const defaultOptions: UserOptions = {
-    gameMode: 'type yourself',
+  const defaultOptions: IOptions = {
+    gameMode: GameMode.TYPING,
     soundVolume: 50,
     fontSize: 16
   }
