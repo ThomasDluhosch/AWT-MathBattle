@@ -60,6 +60,8 @@ paths:
     get:
       tags:
         - users
+      security:
+        - bearerAuth: []
       summary: Get the user's options
       operationId: getUserOptions
       responses:
@@ -76,6 +78,8 @@ paths:
     post:
       tags:
         - users
+      security:
+        - bearerAuth: []
       summary: Update the user's options
       operationId: postUserOptions
       requestBody:
