@@ -18,11 +18,7 @@ const SoundComponent: React.FC = () => {
     };
   }, []);
 
-  return (
-    <Box>
-      <Typography variant="h4">This component plays a sound!</Typography>
-    </Box>
-  );
+  return null;
 };
 
 export default SoundComponent;
