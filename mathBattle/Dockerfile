@@ -11,7 +11,7 @@ RUN yarn
 
 # Create .env file
 RUN touch .env && \
-    echo VITE_BACKEND_PATH=http://localhost:3000/api >> .env && \
+    echo VITE_BACKEND_PATH=https://mathbattle.azurewebsites.net/api >> .env && \
     echo VITE_USE_BACKEND=TRUE >> .env
 
 RUN yarn build
