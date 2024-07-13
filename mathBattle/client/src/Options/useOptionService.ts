@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAuthentication } from "../Authentication/useAuthentication";
 import { fetchFromBackend, fetchFromBackendAuth } from "../fetch/fetch-backend";
-import { GameMode } from "../Interfaces/IOptions";
+import { GameMode, IOptions } from "../Interfaces/IOptions";
 
 export function useOptionService() {
 
@@ -22,7 +22,7 @@ export function useOptionService() {
             authContext.setToken(null);
             navigate("/login");
         } else if (optionsResponse.status == 200) {
-            const options = await optionsResponse.json();
+            const options = await optionsResponse.json() as IOptions;
             return options;
         } else {
             console.error("Error while loading options %s", optionsResponse.status);

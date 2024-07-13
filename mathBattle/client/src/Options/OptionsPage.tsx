@@ -17,7 +17,7 @@ function OptionsPage() {
 
 	const getOptions = useOptionService();
 
-	const [gameMode, setGameMode] = useState(0);
+	const [gameMode, setGameMode] = useState<GameMode>(0);
 
 	const handleChange = (event: SelectChangeEvent) => {
 		setGameMode(parseInt(event.target.value));
@@ -25,7 +25,6 @@ function OptionsPage() {
 
 	useEffect(() => {
 		getOptions().then((result) => {
-			console.log(result);
 		  if (result) setGameMode(result.gameMode);
 		 
 		});

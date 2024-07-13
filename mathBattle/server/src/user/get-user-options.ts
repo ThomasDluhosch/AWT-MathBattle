@@ -9,5 +9,5 @@ export async function getUserOptions(req: Request, res: Response){
         res.status(404).send("User not found");
         return;
     }
-    res.status(200).send(userOptions[0]);
+    res.status(200).send(userOptions[0].options);
 }
