@@ -2,15 +2,19 @@ declare module "*.mp3" {
   const src: string;
   export default src;
 }
-
 declare module "howler" {
   export class Howl {
-    constructor(options: { src: string[] });
+    unload() {
+      throw new Error("Method not implemented.");
+    }
+    constructor(options: {
+      src?: string[];
+      loop?: boolean;
+      autoplay?: boolean;
+      volume?: number;
+    });
 
     play(): void;
-  }
-
-  export class Howler {
-    static volume(volume?: number): number;
+    stop(): void;
   }
 }

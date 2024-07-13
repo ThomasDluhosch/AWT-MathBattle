@@ -17,6 +17,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useLevelId } from "./useLevelId";
 import useKeypress from "react-use-keypress";
 import { characters } from "../Interfaces/Characters";
+import BackgroundSound from "../BackgroundSound";
+
 const taskStyle = {
   border: 5,
   borderRadius: 5,
@@ -24,11 +26,11 @@ const taskStyle = {
 };
 const barStyle = { height: "1em", width: "80%", ml: "10%" };
 import { Howl, Howler } from "howler";
-import fail from "../sounds/fail.mp3";
-import success from "../sounds/success.mp3";
+import hurt from "../sounds/hurt.mp3";
+import slash from "../sounds/slash.mp3";
 
-const sound1Howl = new Howl({ src: [fail] });
-const sound2Howl = new Howl({ src: [success] });
+const sound1Howl = new Howl({ src: [hurt] });
+const sound2Howl = new Howl({ src: [slash] });
 
 const IncorrectAnswer = () => {
   sound1Howl.play();
@@ -164,6 +166,7 @@ export function Level() {
 
   return (
     <div>
+      <BackgroundSound />
       <NavBar />
       <AlertBar />
       <Box textAlign="center" sx={{ m: 3, mt: 8 }}>
