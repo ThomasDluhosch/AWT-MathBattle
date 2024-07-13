@@ -4,6 +4,7 @@ import { LevelStatisticsModel } from "../database/level-statistics/LevelStatisti
 import { CalculationsModel } from "../database/calculations/CalculationsModel";
 import { ILevel } from "../database/levels/ILevel";
 import { CalcType, ICalculation } from "../database/calculations/ICalculations";
+import { UserModel } from "../database/users/UserModel";
 
 var sample = require('@stdlib/random-sample');
 export async function getLevelBattle(req: Request, res: Response) {
@@ -15,6 +16,7 @@ export async function getLevelBattle(req: Request, res: Response) {
 
     const user = req.user;
     if(!user) return res.status(403).send("No user set");
+    const userOptions = await UserModel.find({username: user.username}).select({_id: 0, options: 1}).exec();
     const levelStats = await LevelStatisticsModel.findOne({ number: numberLevel, username: user.username });
 
     const calcTypeParam = req.query.calcType as string;
@@ -22,6 +24,7 @@ export async function getLevelBattle(req: Request, res: Response) {
     if (isNaN(calcType)) calcType = 0;
     const tasks = await getTasks(level, calcType);
     res.status(200).send({
+        gameMode: userOptions.at(0)?.options ?? 1,
         monsterPicture: level.monsterPicture,
         monsterHealth: level.monsterHealth,
         tasks: tasks,

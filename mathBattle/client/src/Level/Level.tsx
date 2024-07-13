@@ -5,6 +5,9 @@ import {
   LinearProgress,
   Grid,
   Button,
+  CircularProgress,
+  Card,
+  CardActionArea,
 } from "@mui/material";
 import { NavBar } from "../NavBar";
 import { theme } from "../main-theme";
@@ -28,6 +31,7 @@ const barStyle = { height: "1em", width: "80%", ml: "10%" };
 import { Howl } from "howler";
 import hurt from "../sounds/hurt.mp3";
 import slash from "../sounds/slash.mp3";
+import { GameMode } from "../Interfaces/IOptions";
 
 const sound1Howl = new Howl({ src: [hurt] });
 const sound2Howl = new Howl({ src: [slash] });
@@ -53,6 +57,7 @@ export function Level() {
   const [getLevelBattle, battleSuccess, calcType] = useLevelBattleService();
   const [setAlert, AlertBar, closeAlert] = useAlertSnackbar();
   const [levelBattle, setLevelBattle] = useState<ILevelBattle>();
+  const [solutionOptions, setSolutionOptions] = useState<number[]>([]);
   const [playerHealth, setPlayerHealth] = useState<number>(3);
   const [solutionInput, setSolutionInput] = useState<number | undefined>(
     undefined
@@ -77,6 +82,16 @@ export function Level() {
       }
     });
   }, []);
+
+  useEffect(() => {
+    if(levelBattle?.tasks[currentTask]){
+      const solutions = [levelBattle?.tasks[currentTask].solution];
+      const randomNums = myRandomInts(2, 8);
+      solutions.push(levelBattle?.tasks[currentTask].solution - (randomNums[0] == 4 ? 1 : randomNums[0] - 4))
+      solutions.push(levelBattle?.tasks[currentTask].solution - (randomNums[1] == 4 ? 1 : randomNums[1] - 4))
+      setSolutionOptions(solutions);
+    }
+  }, [currentTask, levelBattle]);
 
   useEffect(() => {
     if (!levelBattle) return;
@@ -104,12 +119,16 @@ export function Level() {
     return (timeRemaining / timePerTask) * 100;
   };
 
-  const checkSolution = (e: FormEvent<HTMLFormElement>) => {
+  const submitSolution = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (solutionInput == undefined) return;
+    checkSolution(solutionInput);
+  };
+
+  const checkSolution = (input: number) => {
     let newMonsterHealth = monsterHealth;
     let newPlayerHealth = playerHealth;
-    if (levelBattle?.tasks[currentTask].solution == solutionInput) {
+    if (levelBattle?.tasks[currentTask].solution == input) {
       setSolutionGiven(SolutionGiven.CORRECT);
       const timeUsed = timePerTask - timeRemaining;
       const newTimeTotal = timeTotal + timeUsed;
@@ -148,7 +167,7 @@ export function Level() {
         navigate(`/${levelId}/failed`);
       }
     }
-  };
+  }
 
   const changeSolutionInput = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -162,6 +181,17 @@ export function Level() {
     setCurTask(currentTask + 1);
     setTimeRemaining(timePerTask);
     setSolutionInput(undefined);
+  }
+
+  if (!levelBattle) {
+    return (
+      <>
+        <NavBar />
+        <Box textAlign="center" sx={{ m: 3, mt: 8 }}>
+          <CircularProgress />
+        </Box>
+      </>
+    );
   }
 
   return (
@@ -200,8 +230,8 @@ export function Level() {
               </span>
             </Typography>
             <br />
-            <form onSubmit={(e) => checkSolution(e)}>
-              <TextField
+            <form onSubmit={(e) => submitSolution(e)}>
+              {levelBattle?.gameMode == GameMode.TYPING ? <TextField
                 id="solution"
                 autoFocus
                 inputRef={(input) =>
@@ -214,7 +244,17 @@ export function Level() {
                 fullWidth
                 disabled={solutionGiven != SolutionGiven.NO}
                 placeholder="Solution"
-              ></TextField>
+              ></TextField> : <Box>
+                {
+                  solutionOptions.map((possibleSolution) =>  <Card sx={{ ...taskStyle, mb:1, backgroundColor: "transparent" }}>
+                  <CardActionArea sx={{ padding: 1 }} onClick={() => checkSolution(possibleSolution)}>
+                    <Typography variant="h4">
+                      {possibleSolution}</Typography>
+                  </CardActionArea>
+                </Card>)
+                }
+               
+              </Box>}
               <br />
               {solutionGiven != SolutionGiven.NO ? (
                 <>
@@ -266,4 +306,13 @@ export function Level() {
       </Box>
     </div>
   );
+}
+
+function myRandomInts(quantity : number, max : number){
+  const arr = []
+  while(arr.length < quantity){
+    var candidateInt = Math.floor(Math.random() * max) + 1
+    if(arr.indexOf(candidateInt) === -1) arr.push(candidateInt)
+  }
+return(arr)
 }

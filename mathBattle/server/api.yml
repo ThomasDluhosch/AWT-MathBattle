@@ -322,6 +322,9 @@ components:
         monsterHealth:
           type: number
           example: 60
+        gameMode:
+          type: number
+          example: 0
         tasks:
           type: array
           items:
