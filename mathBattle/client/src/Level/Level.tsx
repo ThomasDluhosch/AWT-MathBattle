@@ -33,15 +33,15 @@ import hurt from "../sounds/hurt.mp3";
 import slash from "../sounds/slash.mp3";
 import { GameMode } from "../Interfaces/IOptions";
 
-const sound1Howl = new Howl({ src: [hurt] });
-const sound2Howl = new Howl({ src: [slash] });
+const hurtSound = new Howl({ src: [hurt] , volume:0.05});
+const slashSound = new Howl({ src: [slash], volume:0.09 });
 
 const IncorrectAnswer = () => {
-  sound1Howl.play();
+  hurtSound.play();
 };
 
 const CorrectAnswer = () => {
-  sound2Howl.play();
+  slashSound.play();
 };
 
 enum SolutionGiven {

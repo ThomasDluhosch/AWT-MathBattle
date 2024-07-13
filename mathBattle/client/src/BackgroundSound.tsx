@@ -8,7 +8,7 @@ const SoundComponent: React.FC = () => {
       src: [backgroundMusic],
       autoplay: true,
       loop: true,
-      volume: 0.5,
+      volume: 0.02,
     });
 
     sound.play();
