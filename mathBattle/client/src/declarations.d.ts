@@ -14,3 +14,7 @@ declare module "howler" {
     static volume(volume?: number): number;
   }
 }
+
+declare module "react-use-keypress"{
+  export function useKeypress(key: string, callback: () => void);
+}
