@@ -16,5 +16,5 @@ declare module "howler" {
 }
 
 declare module "react-use-keypress"{
-  export function useKeypress(key: string, callback: () => void);
+  export default function useKeypress(key: string, callback: () => void);
 }

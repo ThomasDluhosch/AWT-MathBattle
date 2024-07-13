@@ -15,7 +15,7 @@ import { useAlertSnackbar } from "../useAlertSnackbar";
 import { fetchFromBackendAuth } from "../fetch/fetch-backend";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLevelId } from "./useLevelId";
-import { useKeypress } from "react-use-keypress";
+import useKeypress from "react-use-keypress";
 import { characters } from "../Interfaces/Characters";
 const taskStyle = {
   border: 5,
