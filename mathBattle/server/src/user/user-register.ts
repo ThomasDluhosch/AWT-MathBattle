@@ -1,7 +1,7 @@
 import { Response, Request } from "express";
 import { UserModel } from "../database/users/UserModel";
 import { hashPassword } from "./hashing";
-import { IUser } from "../database/users/IUser";
+import { GameMode, IOptions, IUser } from "../database/users/IUser";
 import { initLevelStatistics } from "./initLevelStatistics";
 
 
@@ -22,9 +22,15 @@ export async function registerUser(req: Request, res: Response) {
   }
 
   const hashedPwd = hashPassword(password);
+  const defaultOptions: IOptions = {
+    gameMode: GameMode.TYPING,
+    soundVolume: 50,
+    fontSize: 16
+  }
   await UserModel.create({
     username,
-    password: hashedPwd
+    password: hashedPwd,
+    options: defaultOptions
   });
 
   await initLevelStatistics(username);

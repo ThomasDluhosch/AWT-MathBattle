@@ -55,6 +55,10 @@ app.get(`/:routeId/`, (req, res) => {
     res.sendFile(path.join(clientDir, "index.html"));
 });
 
+app.get(`/:routeId/:routeId2/`, (req, res) => {
+    res.sendFile(path.join(clientDir, "index.html"));
+});
+
 app.listen(PORT, () => {
     console.log(`Server is running on PORT: ${PORT}`);
 });

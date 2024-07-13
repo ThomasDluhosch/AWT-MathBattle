@@ -22,7 +22,7 @@ jobs:
     - name: Log in to registry
       uses: docker/login-action@v2
       with:
-        registry: https://mcr.microsoft.com/
+        registry: https://crmathbattle.azurecr.io
         username: ${{ secrets.AzureAppService_ContainerUsername_f3d53881d7c941359dd282dfc0036c72 }}
         password: ${{ secrets.AzureAppService_ContainerPassword_ffe77aa3dc424cb38ab1a29ddcfce907 }}
 
@@ -30,8 +30,9 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_f3d53881d7c941359dd282dfc0036c72 }}//appsvc/staticsite:${{ github.sha }}
-        file: ./Dockerfile
+        tags: crmathbattle.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_f3d53881d7c941359dd282dfc0036c72 }}:${{ github.sha }}
+        file: ./mathBattle/Dockerfile
+        context: ./mathBattle
 
   deploy:
     runs-on: ubuntu-latest
@@ -48,4 +49,4 @@ jobs:
         app-name: 'mathbattle'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_b91fe4eee0e545fc8790aebb7d4b0111 }}
-        images: 'mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_f3d53881d7c941359dd282dfc0036c72 }}//appsvc/staticsite:${{ github.sha }}'
+        images: 'crmathbattle.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_f3d53881d7c941359dd282dfc0036c72 }}:${{ github.sha }}'
