@@ -24,17 +24,21 @@ export function LoginPage() {
       <Box textAlign='center' sx={{ m: 2 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <img src='/public/MathBattle_Logo.png'  style={{ maxHeight: "40vh" }}></img>
+            <img src='/public/MathBattle_Logo.png' style={{ maxHeight: "40vh" }}></img>
             <br />
             <Typography variant="h6" >
               Welcome
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <TextField id="username" label="Username" variant="outlined" value={username} onChange={(e) => setUsername(e.target.value)} />
+            <form onSubmit={(e) => { e.preventDefault(); login() }}>
+              <TextField id="username" label="Username" variant="outlined" value={username} onChange={(e) => setUsername(e.target.value)} />
+            </form>
           </Grid>
           <Grid item xs={12}>
-            <TextField id="password" label="Password" type="password" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <form onSubmit={(e) => { e.preventDefault(); login()  }}>
+              <TextField id="password" label="Password" type="password" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} />
+            </form>
           </Grid>
           <Grid item xs={12}>
             <Button variant="contained" onClick={login}>Login</Button>
