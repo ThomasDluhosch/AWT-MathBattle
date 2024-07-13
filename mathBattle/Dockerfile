@@ -1,7 +1,6 @@
 # Stage 1: Build the frontend
 FROM node:20 as build-frontend
 
-
 WORKDIR /app/mathBattle/client
 
 # Copy the frontend package.json and yarn.lock
@@ -12,7 +11,7 @@ RUN yarn
 
 # Create .env file
 RUN touch .env && \
-    echo VITE_BACKEND_PATH=https://mathbattle.azurewebsites.net/api >> .env && \
+    echo VITE_BACKEND_PATH=http://localhost:3000/api >> .env && \
     echo VITE_USE_BACKEND=TRUE >> .env
 
 RUN yarn build
@@ -50,7 +49,7 @@ WORKDIR /app
 
 # Copy backend build from build-backend stage
 COPY --from=build-backend /app/mathBattle/server .
-COPY --from=build-frontend /app/mathBattle/client/dist ./dist/client
+#COPY --from=build-frontend /app/mathBattle/client/dist ./dist/client
 
 # Install only production dependencies
 RUN yarn install --production

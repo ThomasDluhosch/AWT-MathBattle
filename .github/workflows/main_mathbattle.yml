@@ -31,7 +31,7 @@ jobs:
       with:
         push: true
         tags: mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_f3d53881d7c941359dd282dfc0036c72 }}//appsvc/staticsite:${{ github.sha }}
-        file: ./Dockerfile
+        file: ./mathBattle/Dockerfile
 
   deploy:
     runs-on: ubuntu-latest

@@ -23,7 +23,7 @@ export function NavBar() {
             sx={{ mr: 2 }}
             href="/"
           >
-           <img src='/public/MathBattle_logo.png'  style={{ maxHeight: "40px" }}></img>
+           <img src='/public/MathBattle_Logo.png'  style={{ maxHeight: "40px" }}></img>
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Math Battle
