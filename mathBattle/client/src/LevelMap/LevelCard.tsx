@@ -9,7 +9,7 @@ interface CardProps extends ILevel {
 export function LevelCard(props: CardProps) {
     return (
 
-        <Card key={"level" + props.number} sx={{ minWidth: 100, backgroundColor: props.completed ? '#b5ccad' : props.locked ? "#d9d9d9" : '#a2a3dd' }} >
+        <Card key={"level" + props.number} sx={{ minWidth: 100, backgroundColor: props.medals.addition && props.medals.subtraction && props.medals.multiplication && props.medals.division ? "#F8DE8F" : props.completed ? '#b5ccad' : props.locked ? "#d9d9d9" : '#a2a3dd' }} >
             <CardActionArea disabled={props.locked} href={"/level/" + props.number + "?type=" + props.calcType}>
                 <CardContent>
                     <Typography variant='h3'>
