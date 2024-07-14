@@ -215,7 +215,11 @@ export function Level() {
               )
             )}
           </Grid>
+
+		  
+		  
           <Grid item xs={12} lg={6}>
+		  <Box sx={{width:"80%", ml: "10%"}}>
             <Typography sx={taskStyle} variant="h1">
               {levelBattle?.tasks[currentTask].task}
               <span
@@ -267,6 +271,10 @@ export function Level() {
                 <></>
               )}
             </form>
+			</Box>
+
+
+
             <br />
             <LinearProgress
               color="secondary"
@@ -274,12 +282,16 @@ export function Level() {
               value={getTimeInPercent()}
               sx={{ ...barStyle, mt: 2 }}
             />
+
+
             <br />
             <Typography
               textAlign="center"
               variant="body1"
+			  sx={{mb: 4}}
             >{`${timeRemaining} seconds`}</Typography>
           </Grid>
+		  
           <Grid item xs={12} lg={6}>
             <LinearProgress
               color="primary"
