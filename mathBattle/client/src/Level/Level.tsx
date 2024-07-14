@@ -165,7 +165,7 @@ export function Level() {
       IncorrectAnswer();
       setAlert("Upps! That's not correct!", "error");
       if (newPlayerHealth <= 0) {
-        navigate(`/${levelId}/failed`);
+        navigate(`/${levelId}/failed?type=${calcType}`);
       }
     }
   }
