@@ -77,6 +77,7 @@ export function Level() {
   useEffect(() => {
     getLevelBattle(levelId).then((result) => {
       if (result) {
+        console.log(result);
         setLevelBattle(result);
         setMonsterHealth(result.monsterHealth);
       }
@@ -89,7 +90,7 @@ export function Level() {
       const randomNums = myRandomInts(2, 8);
       solutions.push(levelBattle?.tasks[currentTask].solution - (randomNums[0] == 4 ? 1 : randomNums[0] - 4))
       solutions.push(levelBattle?.tasks[currentTask].solution - (randomNums[1] == 4 ? 1 : randomNums[1] - 4))
-      setSolutionOptions(solutions);
+      setSolutionOptions(solutions.sort((a, b) => a - b));
     }
   }, [currentTask, levelBattle]);
 
@@ -251,7 +252,7 @@ export function Level() {
               ></TextField> : <Box>
                 {
                   solutionOptions.map((possibleSolution) =>  <Card sx={{ ...taskStyle, mb:1, backgroundColor: "transparent" }}>
-                  <CardActionArea sx={{ padding: 1 }} onClick={() => checkSolution(possibleSolution)}>
+                  <CardActionArea disabled={solutionGiven != SolutionGiven.NO} sx={{ padding: 1 }} onClick={() => checkSolution(possibleSolution)}>
                     <Typography variant="h4">
                       {possibleSolution}</Typography>
                   </CardActionArea>

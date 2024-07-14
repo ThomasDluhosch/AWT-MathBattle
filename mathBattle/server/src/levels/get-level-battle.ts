@@ -24,7 +24,7 @@ export async function getLevelBattle(req: Request, res: Response) {
     if (isNaN(calcType)) calcType = 0;
     const tasks = await getTasks(level, calcType);
     res.status(200).send({
-        gameMode: userOptions.at(0)?.options ?? 1,
+        gameMode: userOptions.at(0)?.options?.gameMode ?? 1,
         monsterPicture: level.monsterPicture,
         monsterHealth: level.monsterHealth,
         tasks: tasks,
