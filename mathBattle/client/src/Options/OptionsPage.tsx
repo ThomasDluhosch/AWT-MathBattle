@@ -56,7 +56,7 @@ function OptionsPage() {
 		<div>
 			<NavBar />
 
-			<Box textAlign='center' sx={{ m: 2 }}>
+			<Box textAlign='center' sx={{ m: 10 }}>
 				<AlertBar></AlertBar>
 				<Grid container spacing={4}>
 

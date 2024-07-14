@@ -22,7 +22,7 @@ export function InstructionsPage() {
           textAlign: "center",
         }}
       >
-        <Typography variant="h4" component="h1" gutterBottom>
+        <Typography variant="h2" component="h1" gutterBottom sx={{m:10}}>
           Instructions
         </Typography>
 
