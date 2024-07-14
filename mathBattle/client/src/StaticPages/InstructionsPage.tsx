@@ -64,7 +64,7 @@ export function InstructionsPage() {
           </Typography>
           <br/>
           <img
-            src="/screenshots/levelMapPage.PNG"
+            src="/public/screenshots/levelMapPage.PNG"
             alt="Instructions 2"
             style={{ width: "100%" }}
           />
@@ -84,7 +84,7 @@ export function InstructionsPage() {
           </Typography>
           <br/>
           <img
-            src="/screenshots/battlePage.PNG"
+            src="/public/screenshots/battlePage.PNG"
             alt="Instructions 3"
             style={{ width: "100%" }}
           />
@@ -96,7 +96,7 @@ export function InstructionsPage() {
           Here you can select a game mode. Choose Typing to play with your keyboard, or Multiple Choice if you want to use your mouse.  </Typography>
           <br/>
           <img
-            src="/screenshots/optionsPage.PNG"
+            src="/public/screenshots/optionsPage.PNG"
             alt="Instructions 3"
             style={{ width: "100%" }}
           />
