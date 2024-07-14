@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Slider from "@mui/material/Slider";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -18,58 +18,65 @@ function OptionsPage() {
 
 	const [getOptions, setOptions] = useOptionService();
 	const [setAlert, AlertBar, closeAlert] = useAlertSnackbar();
-	const [gameMode, setGameMode] = useState<GameMode>(0);
+	const [gameMode, setGameMode] = useState<GameMode | undefined>(undefined);
 
 	const handleChange = (event: SelectChangeEvent) => {
+		console.log(parseInt(event.target.value))
 		setGameMode(parseInt(event.target.value));
 	};
 
 	useEffect(() => {
 		getOptions().then((result) => {
-		  if (result) setGameMode(result.gameMode);
+			if (result) setGameMode(result.gameMode);
 		});
-	  }, []);
+	}, []);
 
 	const navigate = useNavigate();
 	const save = async () => {
-		const success =  await setOptions({
-			gameMode: gameMode
+		const success = await setOptions({
+			gameMode: gameMode ?? 1
 		});
-		if(success){
+		if (success) {
 			setAlert("Saved", "success");
 		}
 	};
 
-
+	if (gameMode === undefined) {
+		return (
+			<>
+				<NavBar />
+				<Box textAlign="center" sx={{ m: 3, mt: 8 }}>
+					<CircularProgress />
+				</Box>
+			</>
+		);
+	}
 	return (
-		
+
 		<div>
 			<NavBar />
 
 			<Box textAlign='center' sx={{ m: 2 }}>
-<AlertBar></AlertBar>
+				<AlertBar></AlertBar>
 				<Grid container spacing={4}>
 
 					<Grid item xs={12}>
 						<Typography variant="h2">Options</Typography>
 					</Grid>
 					<Grid item xs={12}>
-						<FormControl>
-							<InputLabel id="demo-simple-select-label">GameMode</InputLabel>
+						<Typography variant="h6">Game Mode</Typography>
 							<Select
-								labelId="demo-simple-select-label"
 								id="demo-simple-select"
-								value={gameMode?.toString() ?? "1"}
-								label="Font Size"
+								value={gameMode.toString()}
 								onChange={handleChange}
+								variant="outlined"
 							>
 
-							<MenuItem value={"0"}>Multiple choice</MenuItem>
-							<MenuItem value={"1"}>Type it yourself!</MenuItem>
-	
+								<MenuItem value={"0"}>Multiple choice</MenuItem>
+								<MenuItem value={"1"}>Type it yourself!</MenuItem>
+
 
 							</Select>
-						</FormControl>
 					</Grid>
 
 					<Grid item xs={12}>
