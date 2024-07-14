@@ -221,7 +221,7 @@ export function Level() {
               <span
                 style={{
                   color:
-                    solutionGiven == SolutionGiven.CORRECT ? "green" : "red",
+                    solutionGiven == SolutionGiven.CORRECT ? "#4648ba" : "#b6244f",
                 }}
               >
                 {solutionGiven == SolutionGiven.NO
