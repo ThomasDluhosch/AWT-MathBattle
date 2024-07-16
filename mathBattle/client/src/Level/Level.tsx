@@ -8,6 +8,7 @@ import {
   CircularProgress,
   Card,
   CardActionArea,
+  Backdrop,
 } from "@mui/material";
 import { NavBar } from "../NavBar";
 import { theme } from "../main-theme";
@@ -33,8 +34,8 @@ import hurt from "../sounds/hurt.mp3";
 import slash from "../sounds/slash.mp3";
 import { GameMode } from "../Interfaces/IOptions";
 
-const hurtSound = new Howl({ src: [hurt] , volume:0.05});
-const slashSound = new Howl({ src: [slash], volume:0.09 });
+const hurtSound = new Howl({ src: [hurt], volume: 0.05 });
+const slashSound = new Howl({ src: [slash], volume: 0.09 });
 
 const IncorrectAnswer = () => {
   hurtSound.play();
@@ -62,6 +63,7 @@ export function Level() {
   const [solutionInput, setSolutionInput] = useState<number | undefined>(
     undefined
   );
+  const [showBackdrop, setShowBackdrop] = useState<boolean>(false);
   const [currentTask, setCurTask] = useState<number>(0);
   const [timeRemaining, setTimeRemaining] = useState<number>(timePerTask);
   const [monsterHealth, setMonsterHealth] = useState<number>(0);
@@ -85,7 +87,7 @@ export function Level() {
   }, []);
 
   useEffect(() => {
-    if(levelBattle?.tasks[currentTask]){
+    if (levelBattle?.tasks[currentTask]) {
       const solutions = [levelBattle?.tasks[currentTask].solution];
       const randomNums = myRandomInts(2, 8);
       solutions.push(levelBattle?.tasks[currentTask].solution + (randomNums[0] == 4 ? 5 : randomNums[0] - 4))
@@ -148,7 +150,9 @@ export function Level() {
       if (newMonsterHealth <= 0) {
         const maxTime = (monsterHealth / 8 + 3) * timePerTask;
         const score = maxTime - newTimeTotal + playerHealth * 10;
+        setShowBackdrop(true);
         battleSuccess(levelId, score).then((success) => {
+          setShowBackdrop(false);
           if (!success) {
             setAlert("Sorry something went wrong.", "error");
           } else {
@@ -157,6 +161,7 @@ export function Level() {
             );
           }
         });
+
       }
     } else {
       setSolutionGiven(SolutionGiven.INCORRECT);
@@ -200,6 +205,14 @@ export function Level() {
       <BackgroundSound />
       <NavBar />
       <AlertBar />
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={showBackdrop}
+      >
+        <Typography variant="h2" sx={{ color: "#24b68b" }}>
+          Success
+        </Typography>
+      </Backdrop>
       <Box textAlign="center" sx={{ m: 3, mt: 8 }}>
         <Grid container>
           <Grid item xs={12}>
@@ -217,62 +230,62 @@ export function Level() {
             )}
           </Grid>
 
-		  
-		  
+
+
           <Grid item xs={12} lg={6}>
-		  <Box sx={{width:"80%", ml: "10%"}}>
-            <Typography sx={taskStyle} variant="h1">
-              {levelBattle?.tasks[currentTask].task}
-              <span
-                style={{
-                  color:
-                    solutionGiven == SolutionGiven.CORRECT ? "#24b68b" : "#b6244f",
-                }}
-              >
-                {solutionGiven == SolutionGiven.NO
-                  ? ""
-                  : " = " + levelBattle?.tasks[currentTask].solution}
-              </span>
-            </Typography>
-            <br />
-            <form onSubmit={(e) => submitSolution(e)}>
-              {levelBattle?.gameMode == GameMode.TYPING ? <TextField
-                id="solution"
-                autoFocus
-                inputRef={(input) =>
-                  input && solutionGiven == SolutionGiven.NO && input.focus()
-                }
-                sx={taskStyle}
-                value={solutionInput ?? ""}
-                onChange={(e) => changeSolutionInput(e)}
-                type="number"
-                fullWidth
-                disabled={solutionGiven != SolutionGiven.NO}
-                placeholder="Solution"
-              ></TextField> : <Box>
-                {
-                  solutionOptions.map((possibleSolution) =>  <Card sx={{ ...taskStyle, mb:1, backgroundColor: "transparent" }}>
-                  <CardActionArea disabled={solutionGiven != SolutionGiven.NO} sx={{ padding: 1 }} onClick={() => checkSolution(possibleSolution)}>
-                    <Typography variant="h4">
-                      {possibleSolution}</Typography>
-                  </CardActionArea>
-                </Card>)
-                }
-               
-              </Box>}
+            <Box sx={{ width: "80%", ml: "10%" }}>
+              <Typography sx={taskStyle} variant="h1">
+                {levelBattle?.tasks[currentTask].task}
+                <span
+                  style={{
+                    color:
+                      solutionGiven == SolutionGiven.CORRECT ? "#24b68b" : "#b6244f",
+                  }}
+                >
+                  {solutionGiven == SolutionGiven.NO
+                    ? ""
+                    : " = " + levelBattle?.tasks[currentTask].solution}
+                </span>
+              </Typography>
               <br />
-              {solutionGiven != SolutionGiven.NO ? (
-                <>
-                  <Typography variant="body2">
-                    Press Enter to proceed
-                  </Typography>
-                  <Button onClick={() => goToNextTask()}>Next Task </Button>
-                </>
-              ) : (
-                <></>
-              )}
-            </form>
-			</Box>
+              <form onSubmit={(e) => submitSolution(e)}>
+                {levelBattle?.gameMode == GameMode.TYPING ? <TextField
+                  id="solution"
+                  autoFocus
+                  inputRef={(input) =>
+                    input && solutionGiven == SolutionGiven.NO && input.focus()
+                  }
+                  sx={taskStyle}
+                  value={solutionInput ?? ""}
+                  onChange={(e) => changeSolutionInput(e)}
+                  type="number"
+                  fullWidth
+                  disabled={solutionGiven != SolutionGiven.NO}
+                  placeholder="Solution"
+                ></TextField> : <Box>
+                  {
+                    solutionOptions.map((possibleSolution) => <Card sx={{ ...taskStyle, mb: 1, backgroundColor: "transparent" }}>
+                      <CardActionArea disabled={solutionGiven != SolutionGiven.NO} sx={{ padding: 1 }} onClick={() => checkSolution(possibleSolution)}>
+                        <Typography variant="h4">
+                          {possibleSolution}</Typography>
+                      </CardActionArea>
+                    </Card>)
+                  }
+
+                </Box>}
+                <br />
+                {solutionGiven != SolutionGiven.NO ? (
+                  <>
+                    <Typography variant="body2">
+                      Press Enter to proceed
+                    </Typography>
+                    <Button onClick={() => goToNextTask()}>Next Task </Button>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </form>
+            </Box>
 
 
 
@@ -289,10 +302,10 @@ export function Level() {
             <Typography
               textAlign="center"
               variant="body1"
-			  sx={{mb: 4}}
+              sx={{ mb: 4 }}
             >{`${timeRemaining} seconds`}</Typography>
           </Grid>
-		  
+
           <Grid item xs={12} lg={6}>
             <LinearProgress
               color="primary"
@@ -321,11 +334,11 @@ export function Level() {
   );
 }
 
-function myRandomInts(quantity : number, max : number){
+function myRandomInts(quantity: number, max: number) {
   const arr = []
-  while(arr.length < quantity){
+  while (arr.length < quantity) {
     var candidateInt = Math.floor(Math.random() * max) + 1
-    if(arr.indexOf(candidateInt) === -1) arr.push(candidateInt)
+    if (arr.indexOf(candidateInt) === -1) arr.push(candidateInt)
   }
-return(arr)
+  return (arr)
 }
