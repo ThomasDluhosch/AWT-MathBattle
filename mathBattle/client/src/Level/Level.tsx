@@ -88,8 +88,8 @@ export function Level() {
     if(levelBattle?.tasks[currentTask]){
       const solutions = [levelBattle?.tasks[currentTask].solution];
       const randomNums = myRandomInts(2, 8);
-      solutions.push(levelBattle?.tasks[currentTask].solution - (randomNums[0] == 4 ? 1 : randomNums[0] - 4))
-      solutions.push(levelBattle?.tasks[currentTask].solution - (randomNums[1] == 4 ? 1 : randomNums[1] - 4))
+      solutions.push(levelBattle?.tasks[currentTask].solution + (randomNums[0] == 4 ? 5 : randomNums[0] - 4))
+      solutions.push(levelBattle?.tasks[currentTask].solution + (randomNums[1] == 4 ? 5 : randomNums[1] - 4))
       setSolutionOptions(solutions.sort((a, b) => a - b));
     }
   }, [currentTask, levelBattle]);

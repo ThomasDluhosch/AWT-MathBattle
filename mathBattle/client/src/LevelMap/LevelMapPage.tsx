@@ -25,7 +25,7 @@ export function LevelMapPage() {
   }, []);
 
   function handleCalcTypeChange(event: any, value: any): void {
-    setCalcType(value);
+    setCalcType(value == undefined || value == null ? calcType : value);
   }
 
   return (
