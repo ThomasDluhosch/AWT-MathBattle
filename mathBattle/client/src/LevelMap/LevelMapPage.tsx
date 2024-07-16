@@ -1,5 +1,6 @@
 import {
   Box,
+  Container,
   Grid,
   ToggleButton,
   ToggleButtonGroup,
@@ -31,7 +32,7 @@ export function LevelMapPage() {
   return (
     <div>
       <NavBar />
-      <Box textAlign="center" sx={{ m: 10 }}>
+      <Container sx={{textAlign:"center", mt: 10}}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h2">
@@ -50,9 +51,10 @@ export function LevelMapPage() {
             >
               {
                 [CalcType.ADD, CalcType.SUBTRACT, CalcType.MULTIPLICATE, CalcType.DIVIDE].map((calc : CalcType) => 
-                  <ToggleButton value={calc} key="addition">
-                  <img src={characters.get(calc)} style={{ maxHeight: "120px" }}></img>
-                </ToggleButton>
+                <ToggleButton value={calc} key={calc}
+                style={{ maxWidth: "18vw" }}>
+                <img src={characters.get(calc)} style={{ maxHeight: "10vh" }}></img>
+            </ToggleButton>
                 )
               }
               </ToggleButtonGroup>
@@ -66,7 +68,7 @@ export function LevelMapPage() {
             </Grid>
           ))}
         </Grid>
-      </Box>
-    </div>
+      </Container>
+       </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Typography, Box, Button, Grid, ButtonGroup, Icon, useTheme, ToggleButtonGroup, ToggleButton } from "@mui/material";
+import { Typography, Box, Button, Grid, ButtonGroup, Icon, useTheme, ToggleButtonGroup, ToggleButton, Container } from "@mui/material";
 import { NavBar } from "../NavBar";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useLevelId } from "./useLevelId";
@@ -44,7 +44,7 @@ export function LevelSucceed() {
         <div>
             <NavBar />
 
-            <Box textAlign="center" sx={{ m: 10 }}>
+            <Container sx={{textAlign:"center", mt: 10}}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Typography variant="h1">Well done!</Typography>
@@ -62,8 +62,9 @@ export function LevelSucceed() {
                         >
                             {
                                 [CalcType.ADD, CalcType.SUBTRACT, CalcType.MULTIPLICATE, CalcType.DIVIDE].map((calc: CalcType) =>
-                                    <ToggleButton value={calc} key="addition">
-                                        <img src={characters.get(calc)} style={{ maxHeight: "120px" }}></img>
+                                    <ToggleButton value={calc} key={calc}
+                                        style={{ maxWidth: "18vw" }}>
+                                        <img src={characters.get(calc)} style={{ maxHeight: "10vh" }}></img>
                                     </ToggleButton>
                                 )
                             }
@@ -109,7 +110,7 @@ export function LevelSucceed() {
 
 
                 </Grid>
-            </Box>
+            </Container>
         </div>
     );
 }

@@ -1,6 +1,7 @@
-import { createTheme } from '@mui/material';
+import { createTheme, responsiveFontSizes } from '@mui/material';
 
-export const theme = createTheme({
+
+export const theme = responsiveFontSizes(createTheme({
   palette: {
     primary: {
       main: '#4648ba',
@@ -16,4 +17,4 @@ export const theme = createTheme({
     fontFamily: "Lora, sans-serif",
     fontSize: 16
   }
-});
+}));

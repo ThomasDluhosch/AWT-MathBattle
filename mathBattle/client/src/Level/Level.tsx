@@ -234,7 +234,7 @@ export function Level() {
 
           <Grid item xs={12} lg={6}>
             <Box sx={{ width: "80%", ml: "10%" }}>
-              <Typography sx={taskStyle} variant="h1">
+              <Typography sx={taskStyle} variant="h2">
                 {levelBattle?.tasks[currentTask].task}
                 <span
                   style={{

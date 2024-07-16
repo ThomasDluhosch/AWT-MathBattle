@@ -1,4 +1,4 @@
-import { Typography, Box, Button, Grid, Icon, ToggleButtonGroup, ToggleButton } from "@mui/material";
+import { Typography, Box, Button, Grid, Icon, ToggleButtonGroup, ToggleButton, Container } from "@mui/material";
 import { NavBar } from "../NavBar";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useLevelId } from "./useLevelId";
@@ -26,10 +26,10 @@ export function LevelFail() {
     <div>
       <NavBar />
 
-      <Box textAlign="center" sx={{ m: 10 }}>
+      <Container sx={{textAlign:"center", mt: 10}}>
         <Grid container spacing={4}>
           <Grid item xs={12}>
-            <Typography variant="h1">YOU FAILED!</Typography>
+            <Typography variant="h1">You failed!</Typography>
 
             <Typography variant="h6">
               OH NO!! You couldn't fend off the monster; it invaded your castle.
@@ -45,9 +45,10 @@ export function LevelFail() {
             >
               {
                 [CalcType.ADD, CalcType.SUBTRACT, CalcType.MULTIPLICATE, CalcType.DIVIDE].map((calc: CalcType) =>
-                  <ToggleButton value={calc} key="addition">
-                    <img src={characters.get(calc)} style={{ maxHeight: "120px" }}></img>
-                  </ToggleButton>
+                <ToggleButton value={calc} key={calc}
+                style={{ maxWidth: "18vw" }}>
+                <img src={characters.get(calc)} style={{ maxHeight: "10vh" }}></img>
+            </ToggleButton>
                 )
               }
             </ToggleButtonGroup>
@@ -66,7 +67,7 @@ export function LevelFail() {
             </Button>
           </Grid>
         </Grid>
-      </Box>
+      </Container>
     </div>
   );
 }
