@@ -15,6 +15,7 @@ export function BasicLayout() {
             <Box sx={{
                 marginTop: 10,
                 width: '100%',
+                textAlign: "center"
             }} component="footer">
                 <Typography variant="caption" color="initial">
                     Group 404 - AWT Project

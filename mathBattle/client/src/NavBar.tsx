@@ -10,7 +10,7 @@ import {
 import { useLoginService } from "./Login/useLoginService";
 
 export function NavBar() {
-  const [_,logoutUser, isLoggedIn] = useLoginService();
+  const [_, logoutUser, isLoggedIn] = useLoginService();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -23,21 +23,12 @@ export function NavBar() {
             sx={{ mr: 2 }}
             href="/"
           >
-           <img src='/public/MathBattle_Logo.png'  style={{ maxHeight: "40px" }}></img>
+            <img src='/public/MathBattle_Logo.png' style={{ maxHeight: "40px" }}></img>
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Math Battle
           </Typography>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="options"
-            sx={{ mr: 1 }}
-            href="/options"
-          >
-            <Icon>settings</Icon>
-          </IconButton>
+
           <IconButton
             size="large"
             edge="start"
@@ -48,19 +39,28 @@ export function NavBar() {
           >
             <Icon>help</Icon>
           </IconButton>
-          {isLoggedIn() ? 
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="options"
-            sx={{ mr: 1 }}
-            onClick={() => logoutUser()}
-            
-          >
-            <Icon>logout</Icon>
-          </IconButton>
-          : <></>}
+          {isLoggedIn() ? <>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="options"
+              sx={{ mr: 1 }}
+              onClick={() => logoutUser()}
+
+            >
+              <Icon>logout</Icon>
+            </IconButton><IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="options"
+              sx={{ mr: 1 }}
+              href="/options"
+            >
+              <Icon>settings</Icon>
+            </IconButton></>
+            : <></>}
         </Toolbar>
       </AppBar>
     </Box>
