@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useLevelHighscoresService } from "./useLevelHighscoresService";
 import { CalcType } from "../Interfaces/CalcType";
 import { characters } from "../Interfaces/Characters";
+import { HeroSelect } from "../Reusables/HeroSelect";
 
 export function LevelSucceed() {
     const navigate = useNavigate();
@@ -25,10 +26,6 @@ export function LevelSucceed() {
             if (result) setLevelHighscores(result);
         });
     }, []);
-
-    function handleCalcTypeChange(event: any, value: any): void {
-        setCalcType(value);
-    }
 
     const returnToMap = () => {
         navigate("/");
@@ -53,22 +50,7 @@ export function LevelSucceed() {
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <ToggleButtonGroup
-                            value={curCalcType}
-                            exclusive
-                            color="primary"
-                            onChange={handleCalcTypeChange}
-                            aria-label="Your hero"
-                        >
-                            {
-                                [CalcType.ADD, CalcType.SUBTRACT, CalcType.MULTIPLICATE, CalcType.DIVIDE].map((calc: CalcType) =>
-                                    <ToggleButton value={calc} key={calc}
-                                        style={{ maxWidth: "18vw" }}>
-                                        <img src={characters.get(calc)} style={{ maxHeight: "10vh" }}></img>
-                                    </ToggleButton>
-                                )
-                            }
-                        </ToggleButtonGroup>
+                    <HeroSelect calcType={curCalcType} onChange={setCalcType}></HeroSelect>
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="h6">
@@ -107,7 +89,6 @@ export function LevelSucceed() {
                             <Typography variant="h6">{index + 1}. {e.username}: {e.score.toString()}</Typography>
                         ))}
                     </Grid>
-
 
                 </Grid>
             </Container>

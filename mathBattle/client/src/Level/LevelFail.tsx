@@ -5,6 +5,7 @@ import { useLevelId } from "./useLevelId";
 import { CalcType } from "../Interfaces/CalcType";
 import { useState } from "react";
 import { characters } from "../Interfaces/Characters";
+import { HeroSelect } from "../Reusables/HeroSelect";
 
 export function LevelFail() {
   const levelId = useLevelId();
@@ -19,14 +20,12 @@ export function LevelFail() {
   const retry = () => {
     navigate("/level/" + levelId + "?type=" + curCalcType)
   };
-  function handleCalcTypeChange(event: any, value: any): void {
-    setCalcType(value);
-  }
+
   return (
     <div>
       <NavBar />
 
-      <Container sx={{textAlign:"center", mt: 10}}>
+      <Container sx={{ textAlign: "center", mt: 10 }}>
         <Grid container spacing={4}>
           <Grid item xs={12}>
             <Typography variant="h1">You failed!</Typography>
@@ -36,24 +35,8 @@ export function LevelFail() {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <ToggleButtonGroup
-              value={curCalcType}
-              exclusive
-              color="primary"
-              onChange={handleCalcTypeChange}
-              aria-label="Your hero"
-            >
-              {
-                [CalcType.ADD, CalcType.SUBTRACT, CalcType.MULTIPLICATE, CalcType.DIVIDE].map((calc: CalcType) =>
-                <ToggleButton value={calc} key={calc}
-                style={{ maxWidth: "18vw" }}>
-                <img src={characters.get(calc)} style={{ maxHeight: "10vh" }}></img>
-            </ToggleButton>
-                )
-              }
-            </ToggleButtonGroup>
+            <HeroSelect calcType={curCalcType} onChange={setCalcType}></HeroSelect>
           </Grid>
-
           <Grid display="flex" justifyContent="center" gap={3} item xs={12}>
             <Button variant="outlined"
               startIcon={<Icon>home</Icon>}

@@ -13,6 +13,7 @@ import { useLevelMapService } from "./useLevelMapService";
 import { useEffect, useState } from "react";
 import { CalcType } from "../Interfaces/CalcType";
 import { characters } from "../Interfaces/Characters";
+import { HeroSelect } from "../Reusables/HeroSelect";
 
 
 export function LevelMapPage() {
@@ -24,10 +25,6 @@ export function LevelMapPage() {
       if (result) setLevels(result);
     });
   }, []);
-
-  function handleCalcTypeChange(event: any, value: any): void {
-    setCalcType(value == undefined || value == null ? calcType : value);
-  }
 
   return (
     <div>
@@ -42,22 +39,7 @@ export function LevelMapPage() {
             <Typography variant="h4">Pick a hero</Typography>
           </Grid>
           <Grid item xs={12}>
-            <ToggleButtonGroup
-              value={calcType}
-              exclusive
-              color="primary"
-              onChange={handleCalcTypeChange}
-              aria-label="Your hero"
-            >
-              {
-                [CalcType.ADD, CalcType.SUBTRACT, CalcType.MULTIPLICATE, CalcType.DIVIDE].map((calc : CalcType) => 
-                <ToggleButton value={calc} key={calc}
-                style={{ maxWidth: "18vw" }}>
-                <img src={characters.get(calc)} style={{ maxHeight: "10vh" }}></img>
-            </ToggleButton>
-                )
-              }
-              </ToggleButtonGroup>
+            <HeroSelect calcType={calcType} onChange={setCalcType}></HeroSelect>
           </Grid>
           <Grid item xs={12}>
           <Typography variant="h4">Pick a battle</Typography>
