@@ -37,22 +37,16 @@ import { GameMode } from "../Interfaces/IOptions";
 const hurtSound = new Howl({ src: [hurt], volume: 0.05 });
 const slashSound = new Howl({ src: [slash], volume: 0.09 });
 
-const IncorrectAnswer = () => {
-  hurtSound.play();
-};
 
-const CorrectAnswer = () => {
-  slashSound.play();
-};
 
 enum SolutionGiven {
   NO,
   CORRECT,
   INCORRECT,
 }
+const timePerTask = 20;
 
 export function Level() {
-  const timePerTask = 20;
   const navigate = useNavigate();
   const levelId = useLevelId();
   const [getLevelBattle, battleSuccess, calcType] = useLevelBattleService();
@@ -125,48 +119,27 @@ export function Level() {
   };
 
   const checkSolution = (input: number) => {
-    let newMonsterHealth = monsterHealth;
-    let newPlayerHealth = playerHealth;
     if (levelBattle?.tasks[currentTask].solution == input) {
       setSolutionGiven(SolutionGiven.CORRECT);
-      const timeUsed = timePerTask - timeRemaining;
-      const newTimeTotal = timeTotal + timeUsed;
+      const [timeUsedPercentage, newTimeTotal] = calculateTimes(timeRemaining, timeTotal);
       setTimeTotal(newTimeTotal);
-      const timeUsedPercentage = timeUsed / timePerTask;
-      if (timeUsedPercentage < 0.5) {
-        newMonsterHealth = monsterHealth - 10;
-      } else if (timeUsedPercentage > 0.8) {
-        newMonsterHealth = monsterHealth - 9;
-      } else {
-        newMonsterHealth = monsterHealth - 8;
-      }
+      const newMonsterHealth = calculateNewMonsterHealth(timeUsedPercentage, monsterHealth);
       setMonsterHealth(newMonsterHealth);
-      CorrectAnswer();
+      slashSound.play();
       setAlert("Correct! You did it!", "success");
       if (newMonsterHealth <= 0) {
-        const maxTime = (monsterHealth / 8 + 3) * timePerTask;
-        const score = maxTime - newTimeTotal + playerHealth * 10;
-        setShowBackdrop(true);
-        battleSuccess(levelId, score).then((success) => {
-          setShowBackdrop(false);
-          if (!success) {
-            setAlert("Sorry something went wrong.", "error");
-          } else {
-            navigate(
-              `/${levelId}/succeed?score=${score}&time=${newTimeTotal}&type=${calcType}`
-            );
-          }
-        });
-
+        processLevelSuccess(newTimeTotal);
       }
     } else {
       setSolutionGiven(SolutionGiven.INCORRECT);
-      newPlayerHealth = playerHealth - 1;
+      const newPlayerHealth = playerHealth - 1;
       setPlayerHealth(newPlayerHealth);
-      IncorrectAnswer();
+      const [_, newTimeTotal] = calculateTimes(timeRemaining, timeTotal);
+      setTimeTotal(newTimeTotal);
+      hurtSound.play();
       setAlert("Upps! That's not correct!", "error");
       if (newPlayerHealth <= 0) {
-        navigate(`/${levelId}/failed?type=${calcType}`);
+        processLevelFail();
       }
     }
   }
@@ -176,6 +149,25 @@ export function Level() {
   ) => {
     setSolutionInput(parseInt(e.target.value));
   };
+
+  function processLevelFail() {
+    navigate(`/${levelId}/failed?type=${calcType}`);
+  }
+
+  function processLevelSuccess(newTimeTotal: number) {
+    const score = calculateScore(monsterHealth, newTimeTotal, playerHealth);
+    setShowBackdrop(true);
+    battleSuccess(levelId, score).then((success) => {
+      setShowBackdrop(false);
+      if (!success) {
+        setAlert("Sorry something went wrong.", "error");
+      } else {
+        navigate(
+          `/${levelId}/succeed?score=${score}&time=${newTimeTotal}&type=${calcType}`
+        );
+      }
+    });
+  }
 
   function goToNextTask(): void {
     closeAlert();
@@ -332,14 +324,37 @@ export function Level() {
 
 
 
-function getRandomSolutions(solution: number, numberOfSolutions: number){
+function calculateNewMonsterHealth(timeUsedPercentage: number, monsterHealth: number) {
+  if (timeUsedPercentage < 0.5) {
+    return monsterHealth - 10;
+  } else if (timeUsedPercentage > 0.8) {
+    return monsterHealth - 9;
+  } else {
+    return monsterHealth - 8;
+  }
+}
+
+function calculateScore(monsterHealth: number, newTimeTotal: number, playerHealth: number) {
+  const maxTime = (monsterHealth / 8 + 3) * timePerTask;
+  const score = maxTime - newTimeTotal + playerHealth * 10;
+  return score;
+}
+
+function getRandomSolutions(solution: number, numberOfSolutions: number) {
   const solutions = [solution];
   while (solutions.length < numberOfSolutions) {
     var candidateInt = Math.floor(Math.random() * 8) + 1
-    if (candidateInt != 4 && solutions.indexOf(candidateInt) === -1 ) {
+    if (candidateInt != 4 && solutions.indexOf(candidateInt) === -1) {
       const newSolution = solution + candidateInt - 4
       solutions.push(newSolution)
     }
   }
   return solutions;
+}
+
+function calculateTimes(timeRemaining: number, curTimeTotal: number) {
+  const timeUsed = timePerTask - timeRemaining;
+  const newTimeTotal = curTimeTotal + timeUsed;
+  const timeUsedPercentage = timeUsed / timePerTask;
+  return [timeUsedPercentage, newTimeTotal]
 }
