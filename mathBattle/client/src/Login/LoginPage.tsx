@@ -20,8 +20,6 @@ export function LoginPage() {
 
   return (
     <div>
-      <NavBar />
-      <Box textAlign='center' sx={{ m: 2 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <img src='/public/MathBattle_Logo.png' style={{ maxHeight: "40vh" }}></img>
@@ -47,7 +45,6 @@ export function LoginPage() {
             <Button variant="outlined" onClick={register}>Register</Button>
           </Grid>
         </Grid>
-      </Box>
     </div>
   )
 }

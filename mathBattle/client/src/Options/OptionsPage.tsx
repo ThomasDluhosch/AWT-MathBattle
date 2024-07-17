@@ -44,48 +44,39 @@ function OptionsPage() {
 	if (gameMode === undefined) {
 		return (
 			<>
-				<NavBar />
-				<Box textAlign="center" sx={{ m: 3, mt: 8 }}>
 					<CircularProgress />
-				</Box>
 			</>
 		);
 	}
 	return (
-
 		<div>
-			<NavBar />
+			<AlertBar></AlertBar>
+			<Grid container spacing={4}>
 
-			<Box textAlign='center' sx={{ m: 10 }}>
-				<AlertBar></AlertBar>
-				<Grid container spacing={4}>
-
-					<Grid item xs={12}>
-						<Typography variant="h2">Options</Typography>
-					</Grid>
-					<Grid item xs={12}>
-						<Typography variant="h6">Game Mode</Typography>
-							<Select
-								id="demo-simple-select"
-								value={gameMode.toString()}
-								onChange={handleChange}
-								variant="outlined"
-							>
-
-								<MenuItem value={"0"}>Multiple choice</MenuItem>
-								<MenuItem value={"1"}>Type it yourself!</MenuItem>
-
-
-							</Select>
-					</Grid>
-
-					<Grid item xs={12}>
-						<Button onClick={save} variant="contained">Save</Button><br />
-					</Grid>
-
+				<Grid item xs={12}>
+					<Typography variant="h2">Options</Typography>
 				</Grid>
-			</Box>
+				<Grid item xs={12}>
+					<Typography variant="h6">Game Mode</Typography>
+					<Select
+						id="demo-simple-select"
+						value={gameMode.toString()}
+						onChange={handleChange}
+						variant="outlined"
+					>
 
+						<MenuItem value={"0"}>Multiple choice</MenuItem>
+						<MenuItem value={"1"}>Type it yourself!</MenuItem>
+
+
+					</Select>
+				</Grid>
+
+				<Grid item xs={12}>
+					<Button onClick={save} variant="contained">Save</Button><br />
+				</Grid>
+
+			</Grid>
 		</div>
 	);
 };

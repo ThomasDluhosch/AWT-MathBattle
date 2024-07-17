@@ -22,9 +22,6 @@ export function LevelFail() {
 
   return (
     <div>
-      <NavBar />
-
-      <Container sx={{ textAlign: "center", mt: 10 }}>
         <Grid container spacing={4}>
           <Grid item xs={12}>
             <Typography variant="h1">You failed!</Typography>
@@ -49,7 +46,6 @@ export function LevelFail() {
             </Button>
           </Grid>
         </Grid>
-      </Container>
     </div>
   );
 }

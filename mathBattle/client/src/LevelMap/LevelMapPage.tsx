@@ -28,8 +28,6 @@ export function LevelMapPage() {
 
   return (
     <div>
-      <NavBar />
-      <Container sx={{textAlign:"center", mt: 10}} maxWidth="xl">
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h2">
@@ -50,7 +48,6 @@ export function LevelMapPage() {
             </Grid>
           ))}
         </Grid>
-      </Container>
        </div>
   );
 }

@@ -14,53 +14,60 @@ import { CreditsPage } from "./StaticPages/CreditsPage.tsx";
 import { InstructionsPage } from "./StaticPages/InstructionsPage.tsx";
 import { Level } from "./Level/Level.tsx";
 import OptionsPage from "./Options/OptionsPage.tsx";
+import { NavBar } from "./NavBar.tsx";
+import { BasicLayout } from "./BasicLayout.tsx";
 
 
 const router = createBrowserRouter([
   {
-    path: "/login",
-    element: <LoginPage />,
-  },
-  {
     path: "/",
-    element: <AuthenticatedRoute />,
+    element: <BasicLayout />,
     children: [
       {
-        path: "/",
-        element: (
-          <LevelMapPage/>
-        ),
-      },
-      {
-        path: "/:id/succeed",
-        element: <LevelSucceed />,
-      },
-      {
-        path: "/:id/failed",
-        element: <LevelFail />,
-      },
-      {
-        path: "/credits",
-        element: <CreditsPage />,
-      },
-      {
-        path: "*",
-        element: <NotFound />,
-      },
-      {
-        path: "/level/:id",
-        element: <Level />,
-      },
-      {
+        path: "/login",
+        element: <LoginPage />,
+      }, {
         path: "/instruction",
         element: <InstructionsPage />,
       },
       {
-        path: "/options",
-        element: <OptionsPage />,
-      }
-    ],
-  },
+        path: "/",
+        element: <AuthenticatedRoute />,
+        children: [
+          {
+            path: "/",
+            element: (
+              <LevelMapPage />
+            ),
+          },
+          {
+            path: "/:id/succeed",
+            element: <LevelSucceed />,
+          },
+          {
+            path: "/:id/failed",
+            element: <LevelFail />,
+          },
+          {
+            path: "/credits",
+            element: <CreditsPage />,
+          },
+          {
+            path: "*",
+            element: <NotFound />,
+          },
+          {
+            path: "/level/:id",
+            element: <Level />,
+          },
+
+          {
+            path: "/options",
+            element: <OptionsPage />,
+          }
+        ],
+      },]
+  }
 ]);
 
 

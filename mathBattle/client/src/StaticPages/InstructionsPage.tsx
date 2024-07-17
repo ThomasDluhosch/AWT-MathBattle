@@ -16,18 +16,6 @@ export function InstructionsPage() {
 
   return (
     <div>
-      <NavBar />
-      <Container
-        maxWidth="md"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          minHeight: "60vh",
-          textAlign: "center",
-        }}
-      >
         <Typography variant="h2" component="h1" sx={{ mt: 10 }}>
           Instructions
         </Typography>
@@ -101,7 +89,6 @@ export function InstructionsPage() {
             style={{ width: "100%" }}
           />
         </Box>
-      </Container>
     </div>
   );
 }

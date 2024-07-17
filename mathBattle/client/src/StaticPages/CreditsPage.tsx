@@ -10,35 +10,32 @@ export function CreditsPage() {
 
     return (
         <div>
-            <NavBar />
 
-            <Box textAlign="center" sx={{ m: 10 }}>
-                <Grid container spacing={4}>
-                    <Grid item xs={12}>
-                        <Typography variant="h4">CREDITS</Typography>
+            <Grid container spacing={4}>
+                <Grid item xs={12}>
+                    <Typography variant="h4">CREDITS</Typography>
 
-                        <Typography variant="h5">
-                            Group 404 - AWT Project
-                        </Typography>
-                    </Grid>
-
-                    <Grid
-                        display="flex"
-                        justifyContent="center"
-                        gap={3}
-                        item
-                        xs={12}
-                    >
-                        <Button
-                            size="large"
-                            variant="contained"
-                            onClick={returnToMap}
-                        >
-                            Main Menu
-                        </Button>
-                    </Grid>
+                    <Typography variant="h5">
+                        Group 404 - AWT Project
+                    </Typography>
                 </Grid>
-            </Box>
+
+                <Grid
+                    display="flex"
+                    justifyContent="center"
+                    gap={3}
+                    item
+                    xs={12}
+                >
+                    <Button
+                        size="large"
+                        variant="contained"
+                        onClick={returnToMap}
+                    >
+                        Main Menu
+                    </Button>
+                </Grid>
+            </Grid>
         </div>
     );
 }

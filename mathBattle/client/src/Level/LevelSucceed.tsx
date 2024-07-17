@@ -36,9 +36,6 @@ export function LevelSucceed() {
 
     return (
         <div>
-            <NavBar />
-
-            <Container sx={{textAlign:"center", mt: 10}}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Typography variant="h1">Well done!</Typography>
@@ -88,7 +85,6 @@ export function LevelSucceed() {
                     </Grid>
 
                 </Grid>
-            </Container>
         </div>
     );
 }

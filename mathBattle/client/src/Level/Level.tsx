@@ -9,6 +9,7 @@ import {
   Card,
   CardActionArea,
   Backdrop,
+  Container,
 } from "@mui/material";
 import { NavBar } from "../NavBar";
 import { theme } from "../main-theme";
@@ -174,27 +175,22 @@ export function Level() {
   if (!levelBattle) {
     return (
       <>
-        <NavBar />
-        <Box textAlign="center" sx={{ m: 3, mt: 8 }}>
           <CircularProgress />
-        </Box>
       </>
     );
   }
 
   return (
     <div>
-      <NavBar />
-      <AlertBar />
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={showBackdrop}
-      >
-        <Typography variant="h2" sx={{ color: "#24b68b" }}>
-          Success
-        </Typography>
-      </Backdrop>
-      <Box textAlign="center" sx={{ m: 3, mt: 8 }}>
+        <AlertBar />
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={showBackdrop}
+        >
+          <Typography variant="h2" sx={{ color: "#24b68b" }}>
+            Success
+          </Typography>
+        </Backdrop>
         <Grid container>
           <Grid item xs={12}>
             <Typography variant="h4">
@@ -301,7 +297,6 @@ export function Level() {
             />
           </Grid>
         </Grid>
-      </Box>
     </div>
   );
 }
