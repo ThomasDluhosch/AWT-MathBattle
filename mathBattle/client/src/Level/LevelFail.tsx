@@ -6,13 +6,12 @@ import { CalcType } from "../Interfaces/CalcType";
 import { useState } from "react";
 import { characters } from "../Interfaces/Characters";
 import { HeroSelect } from "../Reusables/HeroSelect";
+import { useLevelParams } from "./useLevelParams";
 
 export function LevelFail() {
   const levelId = useLevelId();
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const type = searchParams.get("type");
-  const calcType: CalcType = type ? parseInt(type) : 0;
+  const [calcType] = useLevelParams();
   const [curCalcType, setCalcType] = useState(calcType);
   const returnToMap = () => {
     navigate("/");

@@ -7,15 +7,12 @@ import { useLevelHighscoresService } from "./useLevelHighscoresService";
 import { CalcType } from "../Interfaces/CalcType";
 import { characters } from "../Interfaces/Characters";
 import { HeroSelect } from "../Reusables/HeroSelect";
+import { useLevelParams } from "./useLevelParams";
 
 export function LevelSucceed() {
     const navigate = useNavigate();
     const levelId = useLevelId();
-    const [searchParams, setSearchParams] = useSearchParams();
-    const score = searchParams.get("score");
-    const time = searchParams.get("time");
-    const type = searchParams.get("type");
-    const calcType: CalcType = type ? parseInt(type) : 0;
+    const [calcType, score, time] = useLevelParams();
     const theme = useTheme();
     const [levelHighscores, setLevelHighscores] = useState<[{ username: String, score: Number }]>();
     const [curCalcType, setCalcType] = useState(calcType);

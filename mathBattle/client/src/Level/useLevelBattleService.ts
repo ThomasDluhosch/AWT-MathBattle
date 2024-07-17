@@ -3,13 +3,12 @@ import { useAuthentication } from "../Authentication/useAuthentication";
 import { fetchFromBackendAuth } from "../fetch/fetch-backend";
 import { ILevelBattle } from "../Interfaces/ILevelBattle";
 import { CalcType } from "../Interfaces/CalcType";
+import { useLevelParams } from "./useLevelParams";
 
 export function useLevelBattleService() : [(id: number | undefined) => Promise<ILevelBattle | undefined>, (id: number | undefined, score: number) => Promise<boolean | undefined>, CalcType] {
     const navigate = useNavigate();
     const authContext = useAuthentication();
-    const [searchParams, setSearchParams] = useSearchParams();
-    const typeParam = searchParams.get("type");
-    const calcType :CalcType = typeParam ? parseInt(typeParam) : 0;
+    const [calcType] = useLevelParams();
 
     const getLevelBattle = async (id: number | undefined) => {
         if (authContext.token == null) return undefined;
