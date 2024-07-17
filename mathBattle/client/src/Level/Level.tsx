@@ -79,7 +79,6 @@ export function Level() {
   useEffect(() => {
     getLevelBattle(levelId).then((result) => {
       if (result) {
-        console.log(result);
         setLevelBattle(result);
         setMonsterHealth(result.monsterHealth);
       }
@@ -87,11 +86,8 @@ export function Level() {
   }, []);
 
   useEffect(() => {
-    if (levelBattle?.tasks[currentTask]) {
-      const solutions = [levelBattle?.tasks[currentTask].solution];
-      const randomNums = myRandomInts(2, 8);
-      solutions.push(levelBattle?.tasks[currentTask].solution + (randomNums[0] == 4 ? 5 : randomNums[0] - 4))
-      solutions.push(levelBattle?.tasks[currentTask].solution + (randomNums[1] == 4 ? 5 : randomNums[1] - 4))
+    if (levelBattle?.tasks[currentTask] && levelBattle?.gameMode == GameMode.MULTIPLE_CHOICE) {
+      const solutions = getRandomSolutions(levelBattle?.tasks[currentTask].solution, 3);
       setSolutionOptions(solutions.sort((a, b) => a - b));
     }
   }, [currentTask, levelBattle]);
@@ -334,11 +330,16 @@ export function Level() {
   );
 }
 
-function myRandomInts(quantity: number, max: number) {
-  const arr = []
-  while (arr.length < quantity) {
-    var candidateInt = Math.floor(Math.random() * max) + 1
-    if (arr.indexOf(candidateInt) === -1) arr.push(candidateInt)
+
+
+function getRandomSolutions(solution: number, numberOfSolutions: number){
+  const solutions = [solution];
+  while (solutions.length < numberOfSolutions) {
+    var candidateInt = Math.floor(Math.random() * 8) + 1
+    if (candidateInt != 4 && solutions.indexOf(candidateInt) === -1 ) {
+      const newSolution = solution + candidateInt - 4
+      solutions.push(newSolution)
+    }
   }
-  return (arr)
+  return solutions;
 }
