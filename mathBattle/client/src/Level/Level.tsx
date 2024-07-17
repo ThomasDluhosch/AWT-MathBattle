@@ -19,10 +19,11 @@ import { useAlertSnackbar } from "../useAlertSnackbar";
 import { useLevelId } from "./useLevelId";
 import useKeypress from "react-use-keypress";
 import { characters } from "../Interfaces/Characters";
-import {useBackgroundSound} from "../Sounds/useBackgroundSound";
+import { useBackgroundSound } from "../Sounds/useBackgroundSound";
 import { hurtSound, slashSound } from "../Sounds/LevelSounds";
 import { GameMode } from "../Interfaces/IOptions";
 import { useNavigate } from "react-router-dom";
+import { HealthDisplay } from "../Reusables/HealthDisplay";
 
 const taskStyle = {
   border: 5,
@@ -201,17 +202,8 @@ export function Level() {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            {[1, 2, 3].map((v) =>
-              v <= playerHealth ? (
-                <img src="/public/heart.svg" style={{ width: "5em" }} />
-              ) : (
-                <img src="/public/heart-lost.svg" style={{ width: "5em" }} />
-              )
-            )}
+            <HealthDisplay maxHealth={3} curHealth={playerHealth}></HealthDisplay>
           </Grid>
-
-
-
           <Grid item xs={12} lg={6}>
             <Box sx={{ width: "80%", ml: "10%" }}>
               <Typography sx={taskStyle} variant="h2">
