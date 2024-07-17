@@ -14,14 +14,15 @@ import { NavBar } from "../NavBar";
 import { theme } from "../main-theme";
 import { useLevelBattleService } from "./useLevelBattleService";
 import { ILevelBattle } from "../Interfaces/ILevelBattle";
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useAlertSnackbar } from "../useAlertSnackbar";
-import { fetchFromBackendAuth } from "../fetch/fetch-backend";
-import { useNavigate, useParams } from "react-router-dom";
 import { useLevelId } from "./useLevelId";
 import useKeypress from "react-use-keypress";
 import { characters } from "../Interfaces/Characters";
-import BackgroundSound from "../BackgroundSound";
+import {useBackgroundSound} from "../Sounds/useBackgroundSound";
+import { hurtSound, slashSound } from "../Sounds/LevelSounds";
+import { GameMode } from "../Interfaces/IOptions";
+import { useNavigate } from "react-router-dom";
 
 const taskStyle = {
   border: 5,
@@ -29,15 +30,6 @@ const taskStyle = {
   borderColor: theme.palette.secondary.main,
 };
 const barStyle = { height: "1em", width: "80%", ml: "10%" };
-import { Howl } from "howler";
-import hurt from "../sounds/hurt.mp3";
-import slash from "../sounds/slash.mp3";
-import { GameMode } from "../Interfaces/IOptions";
-
-const hurtSound = new Howl({ src: [hurt], volume: 0.05 });
-const slashSound = new Howl({ src: [slash], volume: 0.09 });
-
-
 
 enum SolutionGiven {
   NO,
@@ -65,6 +57,7 @@ export function Level() {
   const [solutionGiven, setSolutionGiven] = useState<SolutionGiven>(
     SolutionGiven.NO
   );
+  useBackgroundSound();
 
   useKeypress("Enter", () => {
     if (solutionGiven != SolutionGiven.NO) goToNextTask();
@@ -190,7 +183,6 @@ export function Level() {
 
   return (
     <div>
-      <BackgroundSound />
       <NavBar />
       <AlertBar />
       <Backdrop

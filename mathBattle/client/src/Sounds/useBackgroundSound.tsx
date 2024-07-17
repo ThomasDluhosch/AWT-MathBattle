@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { Howl } from "howler";
 import { Box, Typography } from "@mui/material";
-import backgroundMusic from "./sounds/backgroundMusic.mp3";
-const SoundComponent: React.FC = () => {
+import backgroundMusic from "./files/backgroundMusic.mp3";
+
+export const useBackgroundSound = () => {
   useEffect(() => {
     const sound = new Howl({
       src: [backgroundMusic],
@@ -18,7 +19,5 @@ const SoundComponent: React.FC = () => {
     };
   }, []);
 
-  return null;
 };
 
-export default SoundComponent;
